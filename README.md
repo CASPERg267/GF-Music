@@ -1,1 +1,1 @@
-read me file : made by kasper
+GF Music Open Source
