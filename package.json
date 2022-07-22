@@ -1,0 +1,38 @@
+{
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node shard.js"
+  },
+  "author": "Adivise",
+  "license": "MIT",
+  "dependencies": {
+    "@discordjs/voice": "^0.7.5",
+    "@distube/soundcloud": "^1.1.0",
+    "@distube/spotify": "^1.2.1",
+    "@distube/yt-dlp": "^1.0.2",
+    "chalk": "^4.1.2",
+    "common-tags": "^1.8.2",
+    "cpu-stat": "^2.0.1",
+    "dbd-dark-dashboard": "^1.6.591",
+    "delay": "^5.0.0",
+    "discord-dashboard": "^2.3.40",
+    "discord.js": "^13.6.0",
+    "distube": "^3.3.4",
+    "dotenv": "^14.3.2",
+    "enmap": "^5.9.0",
+    "ffmpeg-static": "^4.4.1",
+    "figlet": "^1.5.2",
+    "genius-lyrics": "^4.3.8",
+    "libsodium-wrappers": "^0.7.9",
+    "lyrics-finder": "^21.7.0",
+    "memorystore": "^1.6.7",
+    "opusscript": "^0.0.8",
+    "pretty-ms": "^7.0.1",
+    "readline-sync": "^1.4.10",
+    "session-file-store": "^1.5.0",
+    "socket.io": "^4.5.1",
+    "statcord.js": "^3.4.2",
+    "winston": "^3.7.2"
+  }
+}
