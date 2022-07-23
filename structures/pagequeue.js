@@ -6,10 +6,12 @@ module.exports = async (client, message, pages, timeout, queueLength, queueDurat
 
     const row1 = new MessageButton()
         .setCustomId('back')
+        .setLabel(`Back`)
         .setLabel('⬅')
         .setStyle('SECONDARY')
     const row2 = new MessageButton()
         .setCustomId('next')
+        .setLabel(`Next`)
         .setLabel('➡')
         .setStyle('SECONDARY')
     const row = new MessageActionRow()
