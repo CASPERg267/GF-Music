@@ -1,0 +1,17 @@
+{
+    "skip": "skip",
+    "previous": "previous",
+    "leave": "leave",
+    "pause": "pause",
+    "resume": "resume",
+    "loop": "loop",
+    "loopQueue": "loopQueue",
+    "clearQueue": "clearQueue",
+    "replay": "replay",
+    "shuffle": "shuffle",
+    "autoplay": "autoplay",
+    "disableLoop": "disableLoop",
+    "addRelatedSong": "addRelatedSong",
+    "forward20Sec": "forward20Sec",
+    "rewind20Sec": "rewind20Sec"
+}

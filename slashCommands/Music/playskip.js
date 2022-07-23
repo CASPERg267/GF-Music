@@ -25,6 +25,7 @@ module.exports = {
                         .setTitle(`Please join a Voice Channel First!`)
                 ],
             })
+
             if (channel.userLimit != 0 && channel.full)
                 return interaction.reply({
                     embeds: [new MessageEmbed()
@@ -34,6 +35,7 @@ module.exports = {
                     ],
 
                 });
+
             if (channel.guild.me.voice.channel && channel.guild.me.voice.channel.id != channel.id) {
                 return interaction.reply({
                     embeds: [new MessageEmbed()
@@ -48,8 +50,9 @@ module.exports = {
             await interaction.reply({
                 content: `🔍 Searching... \`\`\`${Text}\`\`\``,
             });
+            
             try {
-                let queue = client.distube.getQueue(interaction.guildId)
+                let queue = client.distube.getQueue(interaction)
                 let options = {
                     member: interaction.member,
                     skip: true

@@ -6,17 +6,18 @@ const session = require("express-session");
 const FileStore = require('session-file-store')(session);
 const { readdirSync } = require("fs");
 const categories = readdirSync("./commands/");
+const playerActions = require(`../assests/playerActions.json`);
+const playerFilters = require(`../assests/playerFilters.json`);
+const playlistMixes = require(`../assests/playlistMixes.json`);
 //const pms = require('pretty-ms');
 
 module.exports.load = async client => {
     // commands listing
 
     const commands = []
-
     categories.forEach(category => {
         const dir = client.commands.filter(c => c.category === category);
-        let capitalise = category.slice(0, 1).toUpperCase() + category.slice(1)
-
+        let capitalise = category.slice(0, 1).toUpperCase() + category.slice(1);
         const list = []
 
         dir.forEach(c => {
@@ -39,57 +40,6 @@ module.exports.load = async client => {
     await DBD.useLicense(client.config.dashboard.license);
     DBD.Dashboard = DBD.UpdatedClass();
     const global = client.stats.get("global");
-    const playerActions = {
-        skip: `skip`,
-        previous: `previous`,
-        leave: `leave`,
-        pause: `pause`,
-        resume: `resume`,
-        loop: `loop`,
-        loopQueue: `loopQueue`,
-        clearQueue: `clearQueue`,
-        replay: `replay`,
-        shuffle: `shuffle`,
-        autoplay: `autoplay`,
-        disableLoop: `disableLoop`,
-        addRelatedSong: `addRelatedSong`,
-        forward20Sec: `forward20Sec`,
-        rewind20Sec: `rewind20Sec`
-    }
-    const playerFilters = {
-        Clear: `clear`,
-        ThreeD: `3d`,
-        Bassboost: `bassboost`,
-        Echo: `echo`,
-        Karaoke: `karaoke`,
-        Nightcore: `nightcore`,
-        Vaporwave: `vaporwave`,
-        Flanger: `flanger`,
-        Gate: `gate`,
-        Haas: `haas`,
-        Reverse: `reverse`,
-        Surround: `surround`,
-        Mcompand: `mcompand`,
-        Phaser: `phaser`,
-        Tremolo: `tremolo`,
-        Earwax: `earwax`
-    }
-    const playlistMixes = {
-        NCS: `https://open.spotify.com/playlist/7sZbq8QGyMnhKPcLJvCUFD`,
-        Pop: `https://www.youtube.com/playlist?list=PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj`,
-        Default: `https://www.youtube.com/playlist?list=PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj`,
-        Remixes: `https://www.youtube.com/watch?v=NX7BqdQ1KeU&list=PLYUn4YaogdahwfEkuu5V14gYtTqODx7R2`,
-        Rock: `https://open.spotify.com/playlist/37i9dQZF1DWXRqgorJj26U`,
-        OldGaming: `https://www.youtube.com/watch?v=iFOAJ12lDDU&list=PLYUn4YaogdahPQPTnBGCrytV97h8ABEav`,
-        Gaming: `https://open.spotify.com/playlist/4a54P2VHy30WTi7gix0KW6`,
-        Charts: `https://www.youtube.com/playlist?list=PLMC9KNkIncKvYin_USF1qoJQnIyMAfRxl`,
-        Chill: `https://open.spotify.com/playlist/37i9dQZF1DX4WYpdgoIcn6`,
-        Jazz: `https://open.spotify.com/playlist/37i9dQZF1DXbITWG1ZJKYt`,
-        Blues: `https://open.spotify.com/playlist/37i9dQZF1DXd9rSDyQguIk`,
-        StrangeFruits: `https://open.spotify.com/playlist/6xGLprv9fmlMgeAMpW0x51`,
-        MagicRelease: `https://www.youtube.com/watch?v=WvMc5_RbQNc&list=PLYUn4Yaogdagvwe69dczceHTNm0K_ZG3P`,
-        Metal: `https://open.spotify.com/playlist/37i9dQZF1DX9qNs32fujYe`
-    }
     const Dashboard = new DBD.Dashboard({
         port: client.config.dashboard.port,
         client: {

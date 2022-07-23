@@ -10,6 +10,7 @@ module.exports = {
                 embeds: [
                     new MessageEmbed()
                         .setColor(client.config.embed.color)
+                        .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                         .setDescription(`> **Website:** ${client.config.dashboard.domain}/\n\n> **Dashboard:** ${client.config.dashboard.domain}/guild/${interaction.guildId}\n\n>`)
                 ]
             });

@@ -4,7 +4,6 @@ module.exports = {
         name: "skip",
         aliases: ["s"],
         description: "Skips the current song.",
-        accessableby: "Member",
         category: "music",
         
     run: async (client, interaction) => {

@@ -22,7 +22,7 @@ module.exports = {
                     embeds: [new MessageEmbed()
                         .setColor(client.config.embed.color)
                         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
-                        .setTitle(`Join __my__ Voice Channel!`)
+                        .setTitle(`Join my Voice Channel!`)
                         .setDescription(`<#${interaction.guild.me.voice.channel.id}>`)
                     ],
                     ephemeral: true
