@@ -4,8 +4,8 @@ const { createBar } = require("../../structures/functions");
 
 module.exports = async (client, queue, song) => {
   client.stats.inc(`global`, `songs`)
-  const newQueue = client.distube.getQueue(queue.id)
-  const data = Queue(newQueue, song)
+  const queue = client.distube.getQueue(queue.id);
+  const data = Queue(queue, song)
 
   if (queue.textChannel) {
     const nowplay = await queue.textChannel.send(data)
@@ -25,13 +25,12 @@ module.exports = async (client, queue, song) => {
 
     collector.on('collect', async (message) => {
       const id = message.customId;
-      const queue = client.distube.getQueue(message.guild.id);
       if (id === "pause") {
         if (!queue) {
           collector.stop();
         }
         if (queue.paused) {
-          await client.distube.resume(message.guild.id);
+          await queue.resume();
           const embed = new MessageEmbed()
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
@@ -39,7 +38,7 @@ module.exports = async (client, queue, song) => {
 
           message.reply({ embeds: [embed], ephemeral: true });
         } else {
-          await client.distube.pause(message.guild.id);
+          await queue.pause();
           const embed = new MessageEmbed()
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
@@ -59,7 +58,7 @@ module.exports = async (client, queue, song) => {
 
           message.reply({ embeds: [embed], ephemeral: true });
         } else {
-          await client.distube.skip(message)
+          await queue.skip()
             .then(song => {
               const embed = new MessageEmbed()
                 .setColor(config.embed.color)
@@ -75,7 +74,7 @@ module.exports = async (client, queue, song) => {
           collector.stop();
         }
 
-        await client.distube.stop(message.guild.id);
+        await queue.stop();
 
         const embed = new MessageEmbed()
           .setDescription(`**Song has been stopped`)
@@ -89,7 +88,7 @@ module.exports = async (client, queue, song) => {
           collector.stop();
         }
         if (queue.repeatMode === 0) {
-          client.distube.setRepeatMode(message.guild.id, 1);
+          queue.setRepeatMode(1);
           const embed = new MessageEmbed()
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
@@ -97,7 +96,7 @@ module.exports = async (client, queue, song) => {
 
           message.reply({ embeds: [embed], ephemeral: true });
         } else {
-          client.distube.setRepeatMode(message.guild.id, 0);
+          queue.setRepeatMode(0);
           const embed = new MessageEmbed()
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
@@ -117,7 +116,7 @@ module.exports = async (client, queue, song) => {
 
           message.reply({ embeds: [embed], ephemeral: true });
         } else {
-          await client.distube.previous(message)
+          await queue.previous()
           const embed = new MessageEmbed()
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
@@ -156,30 +155,35 @@ function Queue(nowQueue, nowTrack) {
     .addComponents(
       new MessageButton()
         .setCustomId("pause")
+        .setLabel(`Pause`)
         .setEmoji("⏯")
         .setStyle("SUCCESS")
     )
     .addComponents(
       new MessageButton()
         .setCustomId("previous")
+        .setLabel(`Previous`)
         .setEmoji("⬅")
         .setStyle("PRIMARY")
     )
     .addComponents(
       new MessageButton()
         .setCustomId("stop")
+        .setLabel(`Stop`)
         .setEmoji("✖")
         .setStyle("DANGER")
     )
     .addComponents(
       new MessageButton()
         .setCustomId("skip")
+        .setLabel(`Skip`)
         .setEmoji("➡")
         .setStyle("PRIMARY")
     )
     .addComponents(
       new MessageButton()
         .setCustomId("loop")
+        .setLabel(`Loop`)
         .setEmoji("🔄")
         .setStyle("SUCCESS")
     )
