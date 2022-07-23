@@ -4,9 +4,38 @@ const { check_if_dj } = require("../structures/functions");
 const { Permissions } = require("discord.js");
 const session = require("express-session");
 const FileStore = require('session-file-store')(session);
+const { readdirSync } = require("fs");
+const categories = readdirSync("./commands/");
 //const pms = require('pretty-ms');
 
 module.exports.load = async client => {
+    // commands listing
+
+    const commands = []
+
+    categories.forEach(category => {
+        const dir = client.commands.filter(c => c.category === category);
+        let capitalise = category.slice(0, 1).toUpperCase() + category.slice(1)
+
+        const list = []
+
+        dir.forEach(c => {
+            list.push({
+                commandName: c.name,
+                commandUsage: c.usage || `No usage`,
+                commandDescription: c.description || `No description`,
+                commandAlias: c.aliases || `No aliases`
+            })
+        })
+
+        commands.push({
+            category: capitalise,
+            subTitle: "All helpful commands",
+            aliasesDisabled: false,
+            list: list
+        })
+    })
+
     await DBD.useLicense(client.config.dashboard.license);
     DBD.Dashboard = DBD.UpdatedClass();
     const global = client.stats.get("global");
@@ -76,7 +105,7 @@ module.exports.load = async client => {
             resave: true,
             saveUninitialized: true,
             path: './databases/sessions',
-       }),
+        }),
         minimizedConsoleLogs: true,
         acceptPrivacyPolicy: true,
         requiredPermissions: [DBD.DISCORD_FLAGS.Permissions.VIEW_CHANNEL], // Giving anyone access to use the dashboard, lol
@@ -102,7 +131,7 @@ module.exports.load = async client => {
             },
         },
         invite: {
-            clientId: client.config.dashbaord.clientId,
+            clientId: client.config.dashboard.clientId,
             scopes: ["bot", "identify", "guilds"],
             permissions: '274914954304',
             redirectUri: client.config.dashboard.redirectUri
@@ -176,54 +205,7 @@ module.exports.load = async client => {
                     footer: `${client.user.username} Stats`,
                 },
             },
-            commands: [
-                {
-                    category: `Music`,
-                    subTitle: `All helpful commands`,
-                    list: [{
-                        commandName: 'bug',
-                        commandUsage: `;bug <bug>`,
-                        commandDescription: `test`,
-                        commandAlias: 'No aliases'
-                    },
-                    {
-                        commandName: "2nd command",
-                        commandUsage: "oto.nd <arg> <arg2> [op]",
-                        commandDescription: "Lorem ipsum dolor sth, arg sth arg2 stuff",
-                        commandAlias: "Alias",
-                    },
-                    {
-                        commandName: "Test command",
-                        commandUsage: "prefix.test <arg> [op]",
-                        commandDescription: "Lorem ipsum dolor sth",
-                        commandAlias: "Alias",
-                    },
-                    ],
-                },
-                {
-                    category: `Info`,
-                    subTitle: `All helpful commands`,
-                    list: [{
-                        commandName: 'bug',
-                        commandUsage: `;bug <bug>`,
-                        commandDescription: `test`,
-                        commandAlias: 'No aliases'
-                    },
-                    {
-                        commandName: "2nd command",
-                        commandUsage: "oto.nd <arg> <arg2> [op]",
-                        commandDescription: "Lorem ipsum dolor sth, arg sth arg2 stuff",
-                        commandAlias: "Alias",
-                    },
-                    {
-                        commandName: "Test command",
-                        commandUsage: "prefix.test <arg> [op]",
-                        commandDescription: "Lorem ipsum dolor sth",
-                        commandAlias: "Alias",
-                    },
-                    ],
-                },
-            ],
+            commands: commands,
             guilds: {
                 cardTitle: "Servers",
                 cardDescription: "Here are all the servers you currenly have permissions for:",
@@ -241,15 +223,6 @@ module.exports.load = async client => {
                 savedSettings: "Done!",
                 noPerms: "Error",
             },
-            sidebar: {
-                keepDefault: true,
-                list: [{
-                    icon: `<svg style="position: absolute; margin-left: 8px; margin-top: 2px;" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#2CA8FF">    <path d="M0 0h24v24H0z" fill="none"/> <path d="M20.38 8.57l-1.23 1.85a8 8 0 0 1-.22 7.58H5.07A8 8 0 0 1 15.58 6.85l1.85-1.23A10 10 0 0 0 3.35 19a2 2 0 0 0 1.72 1h13.85a2 2 0  0 0 1.74-1 10 10 0 0 0-.27-10.44z"/> <path d="M10.59 15.41a2 2 0 0 0 2.83 0l5.66-8.49-8.49 5.66a2 2 0 0 0 0 2.83z"/></svg>`,
-                    title: "Title",
-                    link: "/commands",
-                    id: "commands",
-                }]
-            }
         }),
         settings: [
             {

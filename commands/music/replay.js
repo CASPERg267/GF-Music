@@ -2,7 +2,6 @@ const { MessageEmbed } = require("discord.js");
 
 module.exports = {
     name: "replay",
-    aliases: [],
     description: "Replays the current song.",
     category: "music",
     queue: true,

@@ -3,10 +3,8 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
     name: "dashboard",
     cooldown: 5,
+    category: "info",
     description: "Sends a Link of the Dashboard",
-    memberpermissions: [],
-    requiredroles: [],
-    alloweduserids: [],
     run: async (client, message) => {
         try {
             message.reply({

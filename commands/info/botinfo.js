@@ -6,10 +6,8 @@ const { duration } = require("../../structures/functions");
 module.exports = {
     name: "botinfo",
     cooldown: 10,
+    category: "info",
     description: "Shows Bot Information",
-    memberpermissions: [],
-    requiredroles: [],
-    alloweduserids: [],
     run: async (client, message) => {
         try {
             cpuStat.usagePercent(function (e, percent, seconds) {

@@ -1,6 +1,7 @@
 module.exports = {
     name: "ping",
     description: "Gives you information about GF Music ping",
+    category: "info",
     cooldown: 5,
     
     run: async (client, message, args) => {

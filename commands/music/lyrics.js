@@ -2,7 +2,7 @@ const { MessageEmbed } = require('discord.js');
 
 module.exports = {
     name: "lyrics",
-    aliases: [],
+    aliases: [`ly`, `lyric`],
     description: "Display lyrics of a song",
     category: "music",
     queue: true,
