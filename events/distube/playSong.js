@@ -4,8 +4,8 @@ const { createBar } = require("../../structures/functions");
 
 module.exports = async (client, queue, song) => {
   client.stats.inc(`global`, `songs`)
-  const queue = client.distube.getQueue(queue.id);
-  const data = Queue(queue, song)
+  const Nqueue = client.distube.getQueue(queue.id);
+  const data = Queue(Nqueue, song)
 
   if (queue.textChannel) {
     const nowplay = await queue.textChannel.send(data)
@@ -26,11 +26,11 @@ module.exports = async (client, queue, song) => {
     collector.on('collect', async (message) => {
       const id = message.customId;
       if (id === "pause") {
-        if (!queue) {
+        if (!Nqueue) {
           collector.stop();
         }
-        if (queue.paused) {
-          await queue.resume();
+        if (Nqueue.paused) {
+          await Nqueue.resume();
           const embed = new MessageEmbed()
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
@@ -38,7 +38,7 @@ module.exports = async (client, queue, song) => {
 
           message.reply({ embeds: [embed], ephemeral: true });
         } else {
-          await queue.pause();
+          await Nqueue.pause();
           const embed = new MessageEmbed()
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
@@ -47,10 +47,10 @@ module.exports = async (client, queue, song) => {
           message.reply({ embeds: [embed], ephemeral: true });
         }
       } else if (id === "skip") {
-        if (!queue) {
+        if (!Nqueue) {
           collector.stop();
         }
-        if (queue.songs.length === 1) {
+        if (Nqueue.songs.length === 1) {
           const embed = new MessageEmbed()
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
@@ -58,7 +58,7 @@ module.exports = async (client, queue, song) => {
 
           message.reply({ embeds: [embed], ephemeral: true });
         } else {
-          await queue.skip()
+          await Nqueue.skip()
             .then(song => {
               const embed = new MessageEmbed()
                 .setColor(config.embed.color)
@@ -70,11 +70,11 @@ module.exports = async (client, queue, song) => {
             });
         }
       } else if (id === "stop") {
-        if (!queue) {
+        if (!Nqueue) {
           collector.stop();
         }
 
-        await queue.stop();
+        await Nqueue.stop();
 
         const embed = new MessageEmbed()
           .setDescription(`**Song has been stopped`)
@@ -84,11 +84,11 @@ module.exports = async (client, queue, song) => {
         await nowplay.edit({ components: [] });
         message.reply({ embeds: [embed], ephemeral: true });
       } else if (id === "loop") {
-        if (!queue) {
+        if (!Nqueue) {
           collector.stop();
         }
-        if (queue.repeatMode === 0) {
-          queue.setRepeatMode(1);
+        if (Nqueue.repeatMode === 0) {
+          Nqueue.setRepeatMode(1);
           const embed = new MessageEmbed()
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
@@ -96,7 +96,7 @@ module.exports = async (client, queue, song) => {
 
           message.reply({ embeds: [embed], ephemeral: true });
         } else {
-          queue.setRepeatMode(0);
+          Nqueue.setRepeatMode(0);
           const embed = new MessageEmbed()
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
@@ -105,10 +105,10 @@ module.exports = async (client, queue, song) => {
           message.reply({ embeds: [embed], ephemeral: true });
         }
       } else if (id === "previous") {
-        if (!queue) {
+        if (!Nqueue) {
           collector.stop();
         }
-        if (queue.previousSongs.length == 0) {
+        if (Nqueue.previousSongs.length == 0) {
           const embed = new MessageEmbed()
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
@@ -116,7 +116,7 @@ module.exports = async (client, queue, song) => {
 
           message.reply({ embeds: [embed], ephemeral: true });
         } else {
-          await queue.previous()
+          await Nqueue.previous()
           const embed = new MessageEmbed()
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })

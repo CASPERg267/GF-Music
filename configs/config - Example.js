@@ -14,7 +14,7 @@ module.exports = {
     support_server: "", // a link of your support server
     support_server_id: "", // id of your support server
     loadSlashsGlobal: true, // if you want to load slash commands for all guilds leave it to true
-    geniusApiToken: "" || process.env.geniusApiToken, // needed to get songs lyrics
+    geniusApiToken: "" || process.env.geniusApiToken, // needed to get songs lyrics https://genius.com/api-clients/new
     embed: { // customize your embed
         color: "#00f7ff", // color of your embed
         footer_text: "GF Music", // text of your footer's embed

@@ -1,5 +1,6 @@
 const { MessageEmbed, Permissions } = require("discord.js");
 const { onCoolDown, escapeRegex } = require(`../../structures/functions`);
+const Statcord = require("statcord.js");
 
 module.exports = async (client, message) => {
   try {
@@ -78,6 +79,13 @@ module.exports = async (client, message) => {
       try {
         client.stats.inc(message.guild.id, "commands");
         client.stats.inc("global", "commands");
+        if (client.config.statcord_token) {
+          if (client.shard) {
+            Statcord.ShardingClient.postCommand(command, message.author.id, client);
+          } else {
+            statcord.postCommand(command, message.author.id);
+          }
+        }
         command.run(client, message, args);
       } catch (e) {
         client.logger.error(`Something went wrong while running a command **[${e}]**`, { label: `messageCreate` })

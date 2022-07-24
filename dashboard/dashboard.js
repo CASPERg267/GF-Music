@@ -557,7 +557,7 @@ module.exports.load = async client => {
         }
     });
 
-    DBD.customPagesTypes.redirectToUrl(`github`, `Function`),
+    DBD.customPagesTypes.redirectToUrl(`github`, `https://github.com/CASPERg267/GF-Music`);
 
         await Dashboard.init().then(
             client.spawned = true).catch(err => {

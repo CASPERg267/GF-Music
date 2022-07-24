@@ -28,7 +28,7 @@ if (config.topgg_token) {
 if (config.statcord_token) {
     let Statcord = require("statcord.js");
     let statcord = new Statcord.ShardingClient({
-        key: `statcord.com-${config.statcord_token}`,
+        key: config.statcord_token,
         manager,
         postCpuStatistics: true, /* Whether to post CPU statistics or not, defaults to true */
         postMemStatistics: true, /* Whether to post memory statistics or not, defaults to true */
