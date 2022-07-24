@@ -49,3 +49,8 @@ if (config.statcord_token) {
     });
 
 }
+
+if (config.splintr.splintr_key) {
+    let splintr = require('splintr');
+    splintr.proc(config.splintr_key, client.config.splintr.splintr_name, manager, "Manager");
+}

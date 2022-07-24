@@ -4,6 +4,10 @@ module.exports = {
     prefix: "-", // prefix of your bot
     debug: false, // true if you want debug info logged into your console
     statcord_token: "" || process.env.statcord_token, // your statcord token, useful to give you accurate info about your bot https://statcord.com
+    splintr: {
+        splintr_key: "" || process.env.splintr_key, // your splintr key, useful to give you accurate info about your bot https://splintr.uk
+        splintr_name: "" || process.env.splintr_name // your splintr bot name same on dashboard
+    },
     topgg_token: "" || process.env.topgg_token, // if your bot is listed on top.gg fill here to post stats into your bot page, leave blank if don't have it
     youtube_Cookie: "" || process.env.cookie, // needed to play age restricted songs, leave blank if you don't have it
     webhook: { // needed to log all the info you need about your bot
