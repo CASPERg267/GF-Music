@@ -12,8 +12,7 @@ module.exports = {
                     message.reply({
                         content: `Bot Ping: \`${Math.floor((Date.now() - message.createdTimestamp) - 2 * Math.floor(client.ws.ping))} ms\``,
                     })
-                }
-                else {
+                } else {
                     message.reply({
                         content: `Api Ping: \`${Math.floor(client.ws.ping)} ms\``,
                     })
@@ -22,7 +21,7 @@ module.exports = {
                 await message.reply({
                     content: `Getting the Bot Ping...`,
                 });
-                message.editReply({
+                message.Reply({
                     content: `Bot Ping: \`${Math.floor((Date.now() - message.createdTimestamp) - 2 * Math.floor(client.ws.ping))} ms\`\n\n Api Ping: \`${Math.floor(client.ws.ping)} ms\``,
                 })
             }
