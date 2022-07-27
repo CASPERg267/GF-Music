@@ -146,6 +146,11 @@ Just make sure you have node version higher than 16.9.0
 
 5. in order to use bot's dashboard you should get a licence through [Assistants Center](https://assistantscenter.com/licenses/opensource)
 
+ [![Remix on Glitch](https://cdn.glitch.com/2703baf2-b643-4da7-ab91-7ee2a2d00b5b%2Fremix-button.svg)](https://glitch.com/edit/#!/import/github/CASPERg267/GF-Music)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/CASPERg267/GF-Music)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[![Run on Repl.it](https://repl.it/badge/github/CASPERg267/GF-Music)](https://repl.it/github/CASPERg267/GF-Music)
+> Note: If you are hosting your bot in heroku, Please consider upgrading your dyno for running dashboard & bot simultaneously because in free dyno it'll run out of memory(as there are two workers). If you want to run only the bot, turn off the `web` dyno.
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
