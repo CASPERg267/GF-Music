@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
     name: "volume",
@@ -9,7 +9,7 @@ module.exports = {
 
     run: async (client, message, args) => {
         const msg = await message.channel.send({
-            embeds: [new MessageEmbed()
+            embeds: [new EmbedBuilder()
                 .setDescription("Processing.....")
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
@@ -17,9 +17,9 @@ module.exports = {
 
         const queue = client.distube.getQueue(message);
         const { channel } = message.member.voice;
-        if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return
+        if (!channel || message.member.voice.channel !== message.guild.members.me.voice.channel) return
         msg.edit({
-            embeds: [new MessageEmbed()
+            embeds: [new EmbedBuilder()
                 .setDescription("You need to be in a same/voice channel.")
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
@@ -28,7 +28,7 @@ module.exports = {
         const volume = parseInt(args[0]);
 
         if (!volume) {
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                 .setDescription(`Current **volume:** \`${queue.volume}\`%`)
@@ -37,7 +37,7 @@ module.exports = {
         }
 
         if (isNaN(volume)) {
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                 .setDescription(`Please enter a valid number`);
@@ -46,7 +46,7 @@ module.exports = {
         }
 
         if (Number(volume) < 1 || Number(volume) > 100) return msg.edit({
-            embeds: [new MessageEmbed()
+            embeds: [new EmbedBuilder()
                 .setDescription("Please provide a number between 1 and 100")
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
@@ -54,7 +54,7 @@ module.exports = {
 
         queue.setVolume(volume);
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setColor(client.config.embed.color)
             .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
             .setDescription(`**Change volume to: \`${args[0]}\`%**`)

@@ -1,9 +1,9 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = async (client, message, query) => {
     if (message) {
         message.channel.send({
-            embeds: [new MessageEmbed()
+            embeds: [new EmbedBuilder()
                 .setTitle(`Time is out`)
                 .setDescription(`Cancelled searching for ${query}`)
                 .setColor(client.config.embed.color)

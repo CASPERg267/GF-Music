@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { readdirSync } = require("fs");
 const { stripIndents } = require("common-tags");
 
@@ -11,23 +11,23 @@ module.exports = {
     run: async (client, message, args) => {
         let prefix = client.settings.get(message.guild.id, `prefix`);
         client.logger.info(`[COMMAND] Help used by ${message.author.tag} from ${message.guild.name}`, { label: `Help Command` });
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setColor(client.config.embed.color)
             .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
-            .setAuthor({ name: `${message.guild.me.displayName} Help Command!`, iconURL: message.guild.iconURL({ dynamic: true }) })
+            .setAuthor({ name: `${message.guild.members.me.displayName} Help Command!`, iconURL: message.guild.iconURL({ dynamic: true }) })
             .setThumbnail(client.user.displayAvatarURL({ dynamic: true, size: 2048 }));
 
         if (!args[0]) {
             const categories = readdirSync("./commands/")
 
             embed.setDescription(`The bot prefix is: **${prefix}**`)
-            embed.setFooter({ text: `© ${message.guild.me.displayName} | Total Commands: ${client.commands.size}`, iconURL: client.config.embed.footer_icon });
+            embed.setFooter({ text: `© ${message.guild.members.me.displayName} | Total Commands: ${client.commands.size}`, iconURL: client.config.embed.footer_icon });
 
             categories.forEach(category => {
                 const dir = client.commands.filter(c => c.category === category)
                 const capitalise = category.slice(0, 1).toUpperCase() + category.slice(1)
                 try {
-                    embed.addField(`❯ ${capitalise} [${dir.size}]:`, dir.map(c => `\`${c.name}\``).join(" "))
+                    embed.addFields([{ name: `❯ ${capitalise} [${dir.size}]:`, value: dir.map(c => `\`${c.name}\``).join(" ") }])
                 } catch (e) {
                     console.log(e)
                 }

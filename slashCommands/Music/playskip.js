@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
     name: "playskip",
@@ -19,7 +19,7 @@ module.exports = {
             const { channel } = interaction.member.voice;
             if (!channel) return interaction.reply({
                 embeds: [
-                    new MessageEmbed()
+                    new EmbedBuilder()
                         .setColor(client.config.embed.color)
                         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                         .setTitle(`Please join a Voice Channel First!`)
@@ -28,7 +28,7 @@ module.exports = {
 
             if (channel.userLimit != 0 && channel.full)
                 return interaction.reply({
-                    embeds: [new MessageEmbed()
+                    embeds: [new EmbedBuilder()
                         .setColor(client.config.embed.color)
                         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                         .setTitle(`Your Voice Channel is full, I can't join!`)
@@ -36,9 +36,9 @@ module.exports = {
 
                 });
 
-            if (channel.guild.me.voice.channel && channel.guild.me.voice.channel.id != channel.id) {
+            if (channel.guild.members.me.voice.channel && channel.guild.members.me.voice.channel.id != channel.id) {
                 return interaction.reply({
-                    embeds: [new MessageEmbed()
+                    embeds: [new EmbedBuilder()
                         .setColor(client.config.embed.color)
                         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                         .setTitle(`I am already connected somewhere else`)

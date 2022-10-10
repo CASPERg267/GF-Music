@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
     name: "autoplay",
@@ -11,20 +11,20 @@ module.exports = {
             const channel = interaction.member.voice;
             if (!channel) return interaction.reply({
                 embeds: [
-                    new MessageEmbed()
+                    new EmbedBuilder()
                         .setColor(client.config.embed.color)
                         .setTitle(`Please join a voice channel first!`)
                         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                 ],
                 ephemeral: true
             })
-            if (channel.guild.me.voice.channel && channel.guild.me.voice.channel.id != channel.id) {
+            if (channel.guild.members.me.voice.channel && channel.guild.members.me.voice.channel.id != channel.id) {
                 return interaction.reply({
-                    embeds: [new MessageEmbed()
+                    embeds: [new EmbedBuilder()
                         .setColor(client.config.embed.color)
                         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                         .setTitle(`Join my Voice Channel!`)
-                        .setDescription(`<#${interaction.guild.me.voice.channel.id}>`)
+                        .setDescription(`<#${interaction.guild.members.me.voice.channel.id}>`)
                     ],
                     ephemeral: true
                 });
@@ -33,7 +33,7 @@ module.exports = {
                 let queue = client.distube.getQueue(interaction);
                 await queue.toggleAutoplay();
                 interaction.reply({
-                    embeds: [new MessageEmbed()
+                    embeds: [new EmbedBuilder()
                         .setColor(client.config.embed.color)
                         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                         .setDescription(`**${queue.autoplay ? `Enabled` : `Disabled`} Autoplay!**`)]

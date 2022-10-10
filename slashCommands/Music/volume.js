@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
     name: "volume",
@@ -18,20 +18,20 @@ module.exports = {
             const { channel } = interaction.member.voice;
             if (!channel) return interaction.reply({
                 embeds: [
-                    new MessageEmbed()
+                    new EmbedBuilder()
                         .setColor(client.config.embed.color)
                         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                         .setDescription(`**Please join Voice Channel First!**`)
                 ],
                 ephemeral: true
             })
-            if (channel.guild.me.voice.channel && channel.guild.me.voice.channel.id != channel.id) {
+            if (channel.guild.members.me.voice.channel && channel.guild.members.me.voice.channel.id != channel.id) {
                 return interaction.reply({
-                    embeds: [new MessageEmbed()
+                    embeds: [new EmbedBuilder()
                         .setColor(client.config.embed.color)
                         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                         .setTitle(`Join my Voice Channel!`)
-                        .setDescription(`<#${interaction.guild.me.voice.channel.id}>`)
+                        .setDescription(`<#${interaction.guild.members.me.voice.channel.id}>`)
                     ],
                     ephemeral: true
                 });
@@ -42,7 +42,7 @@ module.exports = {
                 let volume = interaction.options.getInteger("volume")
                 if (volume > 100 || volume < 0) return interaction.reply({
                     embeds: [
-                        new MessageEmbed()
+                        new EmbedBuilder()
                             .setColor(client.config.embed.color)
                             .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                             .setDescription(`**The Volume must be between \`0\` and \`100\`!**`)
@@ -51,7 +51,7 @@ module.exports = {
                 })
                 await queue.setVolume(volume);
                 interaction.reply({
-                    embeds: [new MessageEmbed()
+                    embeds: [new EmbedBuilder()
                         .setColor(client.config.embed.color)
                         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                         .setDescription(`Changed the Volume to \`${volume}\`!`)]

@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
     name: "loop",
@@ -23,20 +23,20 @@ module.exports = {
             const channel = interaction.member.voice;
             if (!channel) return interaction.reply({
                 embeds: [
-                    new MessageEmbed()
+                    new EmbedBuilder()
                         .setColor(client.config.embed.color)
                         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
-                        .setTitle(`Please join ${interaction.guild.me.voice.channel ? "__my__" : "a"} VoiceChannel First!`)
+                        .setTitle(`Please join ${interaction.guild.members.me.voice.channel ? "__my__" : "a"} VoiceChannel First!`)
                 ],
                 ephemeral: true
             })
-            if (channel.guild.me.voice.channel && channel.guild.me.voice.channel.id != channel.id) {
+            if (channel.guild.members.me.voice.channel && channel.guild.members.me.voice.channel.id != channel.id) {
                 return interaction.reply({
-                    embeds: [new MessageEmbed()
+                    embeds: [new EmbedBuilder()
                         .setColor(client.config.embed.color)
                         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                         .setTitle(`join my Voice Channel!`)
-                        .setDescription(`<#${interaction.guild.me.voice.channel.id}>`)
+                        .setDescription(`<#${interaction.guild.members.me.voice.channel.id}>`)
                     ],
                     ephemeral: true
                 });
@@ -47,21 +47,21 @@ module.exports = {
                 await queue.setRepeatMode(loop);
                 if (queue.repeatMode == 0) {
                     interaction.reply({
-                        embeds: [new MessageEmbed()
+                        embeds: [new EmbedBuilder()
                             .setColor(client.config.embed.color)
                             .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                             .setTitle(`Disabled the Loop Mode!**`)]
                     })
                 } else if (queue.repeatMode == 1) {
                     interaction.reply({
-                        embeds: [new MessageEmbed()
+                        embeds: [new EmbedBuilder()
                             .setColor(client.config.embed.color)
                             .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                             .setTitle(`🔁 **Enabled the __Song__-Loop** ||(Disabled the **Queue-Loop**)||`)]
                     })
                 } else {
                     interaction.reply({
-                        embeds: [new MessageEmbed()
+                        embeds: [new EmbedBuilder()
                             .setColor(client.config.embed.color)
                             .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                             .setTitle(`🔂 **Enabled the __Queue__-Loop!** ||(Disabled the **Song-Loop**)||`)]

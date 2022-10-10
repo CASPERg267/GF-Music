@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const PlayerMap = new Map();
 const playerintervals = new Map();
 

@@ -1,10 +1,10 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = (client, queue) => {
 
     if (queue.textChannel) {
         queue.textChannel.send({
-            embeds: [new MessageEmbed()
+            embeds: [new EmbedBuilder()
                 .setTitle(`Its not the end i am sure`)
                 .setDescription(`I got disconnected from <#${queue.voice.voiceState.channelId}> and deleted the queue :()`)
                 .setColor(client.config.embed.color)

@@ -1,5 +1,5 @@
 const { onCoolDown } = require("../../structures/functions");
-const { MessageEmbed, Permissions } = require("discord.js");
+const { EmbedBuilder, Permissions } = require("discord.js");
 
 module.exports = async (client, interaction) => {
     const CategoryName = interaction.commandName;
@@ -26,10 +26,10 @@ module.exports = async (client, interaction) => {
         let botchannels = client.settings.get(interaction.guildId, `botchannel`);
         if (!botchannels || !Array.isArray(botchannels)) botchannels = [];
         if (botchannels.length > 0) {
-            if (!botchannels.includes(interaction.channelId) && !interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+            if (!botchannels.includes(interaction.channelId) && !interaction.member.permissions.has(Permissions.Flags.ADMINISTRATOR)) {
                 return interaction.reply({
                     ephemeral: true,
-                    embeds: [new MessageEmbed()
+                    embeds: [new EmbedBuilder()
                         .setColor(client.config.embed.color)
                         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                         .setTitle(`You are not allowed to use this Command in here!`)
@@ -42,11 +42,11 @@ module.exports = async (client, interaction) => {
         if (onCoolDown(interaction, command)) {
             return interaction.reply({
                 ephemeral: true,
-                embeds: [new MessageEmbed()
+                embeds: [new EmbedBuilder()
                     .setColor(client.config.embed.color)
                     .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                     .setDescription(`You have to wait for ${onCoolDown(interaction, command)} in order to use command:**${command}** again.`)
-                    .addField(`Why is there is a cooldown?`, `We apologize for that, but in order to make bot work for everyone else we you should wait, so other users could use the bot without any issues, Thanks for understanding.`)
+                    .addFields([{ name: `Why is there is a cooldown?`, value: `We apologize for that, but in order to make bot work for everyone else we you should wait, so other users could use the bot without any issues, Thanks for understanding.`}])
                 ]
             });
         }
@@ -55,7 +55,7 @@ module.exports = async (client, interaction) => {
             const queue = client.distube.getQueue(interaction);
             if (!queue) interaction.reply({
                 ephemeral: true,
-                embeds: [new MessageEmbed()
+                embeds: [new EmbedBuilder()
                     .setDescription("There is nothing in the queue right now!")
                     .setColor(client.config.embed.color)
                     .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })],
@@ -67,7 +67,7 @@ module.exports = async (client, interaction) => {
             await command.run(client, interaction)
         } catch (e) {
             client.logger.error(`Something went wrong while running a command **[${e}]**`, { label: `interactionCreate` })
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                 .setDescription(`There was an error executing that command, please report that in our [support server](${client.config.support_server})`);

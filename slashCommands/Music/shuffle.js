@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
         name: "shuffle",
@@ -11,9 +11,9 @@ module.exports = {
 
         const queue = client.distube.getQueue(interaction);
         const { channel } = interaction.member.voice;
-        if (!channel || interaction.member.voice.channel !== interaction.guild.me.voice.channel) return
+        if (!channel || interaction.member.voice.channel !== interaction.guild.members.me.voice.channel) return
         interaction.reply({
-            embeds: [new MessageEmbed()
+            embeds: [new EmbedBuilder()
                 .setDescription("You need to be in a same/voice channel.")
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
@@ -21,7 +21,7 @@ module.exports = {
 
         await queue.shuffle();
 
-        let embed = new MessageEmbed()
+        let embed = new EmbedBuilder()
             .setColor(client.config.embed.color)
             .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
             .setDescription(`**Song has been shuffled**`);

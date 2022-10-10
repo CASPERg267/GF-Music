@@ -58,7 +58,7 @@ module.exports.load = async client => {
         }),
         minimizedConsoleLogs: true,
         acceptPrivacyPolicy: true,
-        requiredPermissions: [DBD.DISCORD_FLAGS.Permissions.VIEW_CHANNEL], // Giving anyone access to use the dashboard, lol
+        requiredPermissions: [DBD.DISCORD_Flags.Permissions.VIEW_CHANNEL], // Giving anyone access to use the dashboard, lol
         rateLimits: {
             manage: {
                 windowMs: 15 * 60 * 1000, // 15 minutes
@@ -449,7 +449,7 @@ module.exports.load = async client => {
                         setNew: async ({ guild, user, newData }) => {
                             let server = client.guilds.cache.get(guild.id);
                             let member = server.members.cache.get(user.id);
-                            if (member.permissions.has([Permissions.FLAGS.MANAGE_GUILD])) {
+                            if (member.permissions.has([Permissions.Flags.MANAGE_GUILD])) {
                                 return client.settings.set(guild.id, newData, `defaultautoplay`);
                             } else return { error: `You don't have (Manage Server) permission in order to edit this setting` }
                         },

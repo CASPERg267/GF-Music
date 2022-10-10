@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
     name: "skipto",
@@ -9,7 +9,7 @@ module.exports = {
 
     run: async (client, message, args) => {
         const msg = await message.channel.send({
-            embeds: [new MessageEmbed()
+            embeds: [new EmbedBuilder()
                 .setDescription("Processing.....")
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
@@ -17,16 +17,16 @@ module.exports = {
 
         const queue = client.distube.getQueue(message);
         const { channel } = message.member.voice;
-        if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return
+        if (!channel || message.member.voice.channel !== message.guild.members.me.voice.channel) return
         msg.edit({
-            embeds: [new MessageEmbed()
+            embeds: [new EmbedBuilder()
                 .setDescription("You need to be in a same/voice channel.")
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
         })
 
         if (isNaN(args[0])) {
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                 .setDescription(`Please enter a valid number!`);
@@ -36,7 +36,7 @@ module.exports = {
 
         await queue.jump(parseInt(args[0]))
             .then(queue => {
-                const embed = new MessageEmbed()
+                const embed = new EmbedBuilder()
                     .setColor(client.config.embed.color)
                     .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                     .setDescription(`**Skipped to ${args[0]}**`)

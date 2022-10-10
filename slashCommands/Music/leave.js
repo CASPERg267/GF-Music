@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
     name: "leave",
@@ -10,20 +10,20 @@ module.exports = {
             const channel = interaction.member.voice;
             if (!channel) return interaction.reply({
                 embeds: [
-                    new MessageEmbed()
+                    new EmbedBuilder()
                         .setColor(client.config.embed.color)
                         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
-                        .setTitle(`**Please join ${interaction.guild.me.voice.channel ? "my" : "a"} VoiceChannel First!**`)
+                        .setTitle(`**Please join ${interaction.guild.members.me.voice.channel ? "my" : "a"} VoiceChannel First!**`)
                 ],
                 ephemeral: true
             })
-            if (channel.guild.me.voice.channel && channel.guild.me.voice.channel.id != channel.id) {
+            if (channel.guild.members.me.voice.channel && channel.guild.members.me.voice.channel.id != channel.id) {
                 return interaction.reply({
-                    embeds: [new MessageEmbed()
+                    embeds: [new EmbedBuilder()
                         .setColor(client.config.embed.color)
                         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                         .setTitle(`Join my Voice Channel!`)
-                        .setDescription(`<#${interaction.guild.me.voice.channel.id}>`)
+                        .setDescription(`<#${interaction.guild.members.me.voice.channel.id}>`)
                     ],
                     ephemeral: true
                 });
@@ -32,7 +32,7 @@ module.exports = {
                 let queue = client.distube.getQueue(interaction.guildId);
                 await queue.stop()
                 interaction.reply({
-                    embeds: [new MessageEmbed()
+                    embeds: [new EmbedBuilder()
                         .setColor(client.config.embed.color)
                         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                         .setTimestamp()

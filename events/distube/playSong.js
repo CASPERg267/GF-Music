@@ -1,4 +1,4 @@
-const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const config = require("../../configs/config");
 const { createBar } = require("../../structures/functions");
 
@@ -11,11 +11,11 @@ module.exports = async (client, queue, song) => {
     const nowplay = await queue.textChannel.send(data)
 
     const filter = (message) => {
-      if (message.guild.me.voice.channel && message.guild.me.voice.channelId === message.member.voice.channelId) return true;
+      if (message.guild.members.me.voice.channel && message.guild.members.me.voice.channelId === message.member.voice.channelId) return true;
       else {
         message.reply({
-          embeds: [new MessageEmbed()
-            .setDescription(`You need to be in my voice channel <#${message.guild.me.voice.channelId}>.`)
+          embeds: [new EmbedBuilder()
+            .setDescription(`You need to be in my voice channel <#${message.guild.members.me.voice.channelId}>.`)
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })], ephemeral: true
         });
@@ -31,7 +31,7 @@ module.exports = async (client, queue, song) => {
         }
         if (Nqueue.paused) {
           await Nqueue.resume();
-          const embed = new MessageEmbed()
+          const embed = new EmbedBuilder()
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
             .setDescription(`**Song has been resumed**`);
@@ -39,7 +39,7 @@ module.exports = async (client, queue, song) => {
           message.reply({ embeds: [embed], ephemeral: true });
         } else {
           await Nqueue.pause();
-          const embed = new MessageEmbed()
+          const embed = new EmbedBuilder()
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
             .setDescription(`**Song has been paused**`);
@@ -51,7 +51,7 @@ module.exports = async (client, queue, song) => {
           collector.stop();
         }
         if (Nqueue.songs.length === 1) {
-          const embed = new MessageEmbed()
+          const embed = new EmbedBuilder()
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
             .setDescription("**There are no songs in queue**")
@@ -60,7 +60,7 @@ module.exports = async (client, queue, song) => {
         } else {
           await Nqueue.skip()
             .then(song => {
-              const embed = new MessageEmbed()
+              const embed = new EmbedBuilder()
                 .setColor(config.embed.color)
                 .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
                 .setDescription("**Song has been skipped**")
@@ -76,7 +76,7 @@ module.exports = async (client, queue, song) => {
 
         await Nqueue.stop();
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
           .setDescription(`**Song has been stopped`)
           .setColor(config.embed.color)
           .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
@@ -89,7 +89,7 @@ module.exports = async (client, queue, song) => {
         }
         if (Nqueue.repeatMode === 0) {
           Nqueue.setRepeatMode(1);
-          const embed = new MessageEmbed()
+          const embed = new EmbedBuilder()
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
             .setDescription(`**Song is loop current**`)
@@ -97,7 +97,7 @@ module.exports = async (client, queue, song) => {
           message.reply({ embeds: [embed], ephemeral: true });
         } else {
           Nqueue.setRepeatMode(0);
-          const embed = new MessageEmbed()
+          const embed = new EmbedBuilder()
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
             .setDescription(`**Song is unloop current**`)
@@ -109,7 +109,7 @@ module.exports = async (client, queue, song) => {
           collector.stop();
         }
         if (Nqueue.previousSongs.length == 0) {
-          const embed = new MessageEmbed()
+          const embed = new EmbedBuilder()
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
             .setDescription("**There are no previous songs**")
@@ -117,7 +117,7 @@ module.exports = async (client, queue, song) => {
           message.reply({ embeds: [embed], ephemeral: true });
         } else {
           await Nqueue.previous()
-          const embed = new MessageEmbed()
+          const embed = new EmbedBuilder()
             .setColor(config.embed.color)
             .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
             .setDescription("**Song has been previoused**`")
@@ -137,55 +137,55 @@ module.exports = async (client, queue, song) => {
 }
 
 function Queue(nowQueue, nowTrack) {
-  const embeded = new MessageEmbed()
+  const embeded = new EmbedBuilder()
     .setAuthor({ name: `Starting Playing...`, iconURL: 'https://cdn.discordapp.com/emojis/741605543046807626.gif' })
     .setThumbnail(nowTrack.thumbnail)
     .setColor(config.embed.color)
-    .addFields({ name: `Track Uploader:`, value: `**[${nowTrack.uploader.name}](${nowTrack.uploader.url})**`, inline: true },
-      { name: `Current Player Volume:`, value: `${nowQueue.volume}%`, inline: true },
-      { name: `Player Filters:`, value: `${nowQueue.filters.join(", ") || "Normal"}`, inline: true },
-      { name: `Autoplay Mode:`, value: `${nowQueue.autoplay ? "On" : "Off"}`, inline: true },
-      { name: `Total Playlist Duration:`, value: `${nowQueue.formattedDuration}`, inline: true },
-      { name: `Current Track Duration:`, value: `${createBar(nowQueue.songs[0].duration, nowQueue.currentTime, 13)} \`${nowQueue.songs[0].formattedDuration}\`` })
+    .addFields([{ name: `Track Uploader:`, value: `**[${nowTrack.uploader.name}](${nowTrack.uploader.url})**`, inline: true },
+    { name: `Current Player Volume:`, value: `${nowQueue.volume}%`, inline: true },
+    { name: `Player Filters:`, value: `${nowQueue.filters.join(", ") || "Normal"}`, inline: true },
+    { name: `Autoplay Mode:`, value: `${nowQueue.autoplay ? "On" : "Off"}`, inline: true },
+    { name: `Total Playlist Duration:`, value: `${nowQueue.formattedDuration}`, inline: true },
+    { name: `Current Track Duration:`, value: `${createBar(nowQueue.songs[0].duration, nowQueue.currentTime, 13)} \`${nowQueue.songs[0].formattedDuration}\`` }])
     .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
     .setDescription(`**[${nowTrack.name}](${nowTrack.url})**`)
     .setTimestamp()
 
-  const row = new MessageActionRow()
+  const row = new ActionRowBuilder()
     .addComponents(
-      new MessageButton()
+      new ButtonBuilder()
         .setCustomId("pause")
         .setLabel(`Pause`)
         .setEmoji("⏯")
-        .setStyle("SUCCESS")
+        .setStyle(ButtonStyle.Success)
     )
     .addComponents(
-      new MessageButton()
+      new ButtonBuilder()
         .setCustomId("previous")
         .setLabel(`Previous`)
         .setEmoji("⬅")
-        .setStyle("PRIMARY")
+        .setStyle(ButtonStyle.Primary)
     )
     .addComponents(
-      new MessageButton()
+      new ButtonBuilder()
         .setCustomId("stop")
         .setLabel(`Stop`)
         .setEmoji("✖")
-        .setStyle("DANGER")
+        .setStyle(ButtonStyle.Danger)
     )
     .addComponents(
-      new MessageButton()
+      new ButtonBuilder()
         .setCustomId("skip")
         .setLabel(`Skip`)
         .setEmoji("➡")
-        .setStyle("PRIMARY")
+        .setStyle(ButtonStyle.Primary)
     )
     .addComponents(
-      new MessageButton()
+      new ButtonBuilder()
         .setCustomId("loop")
         .setLabel(`Loop`)
         .setEmoji("🔄")
-        .setStyle("SUCCESS")
+        .setStyle(ButtonStyle.Success)
     )
   return {
     embeds: [embeded],

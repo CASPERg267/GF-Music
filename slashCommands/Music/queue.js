@@ -1,4 +1,4 @@
-const { MessageEmbed, MessageSelectMenu, MessageActionRow } = require("discord.js");
+const { EmbedBuilder, SelectMenuBuilder, ActionRowBuilder } = require("discord.js");
 
 module.exports = {
     name: "queue",
@@ -10,20 +10,20 @@ module.exports = {
             const { channel } = interaction.member.voice;
             if (!channel) return interaction.reply({
                 embeds: [
-                    new MessageEmbed()
+                    new EmbedBuilder()
                         .setColor(client.config.embed.color)
                         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                         .setDescription(`**Please join a Voice Channel First!**`)
                 ],
                 ephemeral: true
             })
-            if (channel.guild.me.voice.channel && channel.guild.me.voice.channel.id != channel.id) {
+            if (channel.guild.members.me.voice.channel && channel.guild.members.me.voice.channel.id != channel.id) {
                 return interaction.reply({
-                    embeds: [new MessageEmbed()
+                    embeds: [new EmbedBuilder()
                         .setColor(client.config.embed.color)
                         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                         .setTitle(`Join my Voice Channel!`)
-                        .setDescription(`<#${interaction.guild.me.voice.channel.id}>`)
+                        .setDescription(`<#${interaction.guild.members.me.voice.channel.id}>`)
                     ],
                     ephemeral: true
                 });
@@ -32,7 +32,7 @@ module.exports = {
                 let newQueue = client.distube.getQueue(interaction.guildId);
                 if (!newQueue || !newQueue.songs || newQueue.songs.length == 0) return interaction.reply({
                     embeds: [
-                        new MessageEmbed()
+                        new EmbedBuilder()
                             .setColor(client.config.embed.color)
                             .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                             .setDescription(`**I am nothing Playing right now!**`)
@@ -48,7 +48,7 @@ module.exports = {
                     const current = qus.slice(i, k)
                     let j = i;
                     const info = current.map((track) => `**${j++} -** [\`${String(track.name).replace(/\[/igu, "{").replace(/\]/igu, "}").substr(0, 60)}\`](${track.url}) - \`${track.formattedDuration}\``).join("\n")
-                    const embed = new MessageEmbed()
+                    const embed = new EmbedBuilder()
                         .setColor(client.config.embed.color)
                         .setDescription(`${info}`)
                     if (i < 10) {
@@ -65,7 +65,7 @@ module.exports = {
                     pages.push(embeds.slice(i, i + 3));
                 }
                 pages = pages.slice(0, 24)
-                const Menu = new MessageSelectMenu()
+                const Menu = new SelectMenuBuilder()
                     .setCustomId("QUEUEPAGES")
                     .setPlaceholder("Select a Page")
                     .addOptions([
@@ -77,7 +77,7 @@ module.exports = {
                             return Obj;
                         })
                     ])
-                const row = new MessageActionRow()
+                const row = new ActionRowBuilder()
                     .addComponents([Menu])
                 interaction.reply({
                     embeds: [embeds[0]],

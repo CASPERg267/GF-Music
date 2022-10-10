@@ -1,4 +1,4 @@
-const { Client, Intents, Permissions, Collection } = require("discord.js");
+const { Client, GatewayIntentBits, Partials, Permissions, Collection } = require("discord.js");
 const { DisTube } = require('distube');
 const { YtDlpPlugin } = require("@distube/yt-dlp");
 const { SpotifyPlugin } = require('@distube/spotify');
@@ -10,10 +10,10 @@ class gfMusicClient extends Client {
     constructor() {
         super({
             intents: [
-                Intents.FLAGS.GUILDS,
-                Intents.FLAGS.GUILD_MESSAGES,
-                Intents.FLAGS.GUILD_VOICE_STATES,
-                Intents.FLAGS.GUILD_MESSAGE_REACTIONS
+                GatewayIntentBits.Flags.Guilds,
+                GatewayIntentBits.Flags.GuildMessages,
+                GatewayIntentBits.Flags.GuildVoiceStates,
+                GatewayIntentBits.Flags.GuildMessageReactions
             ],
             allowedMentions: {
                 parse: ["roles", "users"],
@@ -21,7 +21,7 @@ class gfMusicClient extends Client {
             },
             failIfNotExists: false,
             waitGuildTimeout: 1000,
-            partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+            partials: [Partials.Message, Partials.Channel, Partials.Reaction],
         });
 
         this.config = require("./configs/config");
@@ -37,16 +37,16 @@ class gfMusicClient extends Client {
         if (!this.token) this.token = this.config.token;
 
         this.requiredVoicePermissions = [
-            Permissions.FLAGS.VIEW_CHANNEL,
-            Permissions.FLAGS.CONNECT,
-            Permissions.FLAGS.SPEAK
+            Permissions.Flags.VIEW_CHANNEL,
+            Permissions.Flags.CONNECT,
+            Permissions.Flags.SPEAK
         ];
         this.requiredTextPermissions = [
-            Permissions.FLAGS.VIEW_CHANNEL,
-            Permissions.FLAGS.SEND_MESSAGES,
-            Permissions.FLAGS.READ_MESSAGE_HISTORY,
-            Permissions.FLAGS.ADD_REACTIONS,
-            Permissions.FLAGS.EMBED_LINKS
+            Permissions.Flags.VIEW_CHANNEL,
+            Permissions.Flags.SEND_MESSAGES,
+            Permissions.Flags.READ_MESSAGE_HISTORY,
+            Permissions.Flags.ADD_REACTIONS,
+            Permissions.Flags.EMBED_LINKS
         ];
 
         this.distube = new DisTube(this, {

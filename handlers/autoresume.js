@@ -45,10 +45,10 @@ module.exports = client => {
                 uploader: track.uploader,
                 url: track.url,
                 views: track.views,
-              }), guild.members.cache.get(track.memberId) || guild.me, track.source);
+              }), guild.members.members.cache.get(track.memberId) || guild.members.me, track.source);
           };
           await client.distube.play(voiceChannel, tracks[0].url, {
-            member: guild.members.cache.get(tracks[0].memberId) || guild.me,
+            member: guild.members.members.cache.get(tracks[0].memberId) || guild.members.me,
             textChannel: textChannel || null
           })
           let newQueue = client.distube.getQueue(guild.id);

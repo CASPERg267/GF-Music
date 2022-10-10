@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
     name: "loop",
@@ -9,7 +9,7 @@ module.exports = {
 
     run: async (client, message, args) => {
         const msg = await message.channel.send({
-            embeds: [new MessageEmbed()
+            embeds: [new EmbedBuilder()
                 .setDescription("Processing.....")
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
@@ -17,8 +17,8 @@ module.exports = {
 
         const queue = client.distube.getQueue(message);
         const { channel } = message.member.voice;
-        if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit({
-            embeds: [new MessageEmbed()
+        if (!channel || message.member.voice.channel !== message.guild.members.me.voice.channel) return msg.edit({
+            embeds: [new EmbedBuilder()
                 .setDescription("You need to be in a same/voice channel.")
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
@@ -26,7 +26,7 @@ module.exports = {
 
         if (!args || args === `disable` || `0`) {
             queue.setRepeatMode(0)
-            const disable = new MessageEmbed()
+            const disable = new EmbedBuilder()
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                 .setDescription(`**loop has been disabled**`)
@@ -35,7 +35,7 @@ module.exports = {
 
         } else if (args[0] === `song` || `1`) {
             queue.setRepeatMode(1);
-            const song = new MessageEmbed()
+            const song = new EmbedBuilder()
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                 .setDescription(`**loop song is now enabled**`)
@@ -44,7 +44,7 @@ module.exports = {
 
         } else if (args[0] === `queue` || `2`) {
             queue.setRepeatMode(2)
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                 .setDescription(`**loop queue is now enabled**`)
@@ -52,7 +52,7 @@ module.exports = {
             msg.edit({ embeds: [embed] });
 
         } else msg.edit({
-            embeds: [new MessageEmbed()
+            embeds: [new EmbedBuilder()
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                 .setDescription(`**Choose between (loop song - loop queue - loop disable)**`)]
