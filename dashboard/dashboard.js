@@ -58,7 +58,7 @@ module.exports.load = async client => {
         }),
         minimizedConsoleLogs: true,
         acceptPrivacyPolicy: true,
-        requiredPermissions: [DBD.DISCORD_Flags.Permissions.VIEW_CHANNEL], // Giving anyone access to use the dashboard, lol
+        requiredPermissions: [DBD.DISCORD_FLAGS.Permissions.VIEW_CHANNEL], // Giving anyone access to use the dashboard, lol
         rateLimits: {
             manage: {
                 windowMs: 15 * 60 * 1000, // 15 minutes
