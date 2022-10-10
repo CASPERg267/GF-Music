@@ -274,7 +274,9 @@ module.exports.load = async client => {
                             let queue = client.distube.getQueue(guild.id);
                             let vc = member.voice.channel;
                             if (!vc) return { error: `${member.displayName} You have to be in voice channel in ${server.name} if you want to play something` }
-                            const song = client.distube.play(vc, newData, { member: member });
+                            const song = client.distube.play(vc, newData, { member: member }).catch(err => {
+                                return { error: err.message }
+                            });
                             const nsfw = client.settings.get(guild.id, `nsfw`);
                             if (newData) return song
                             else if (queue.songs.length === 1) {
@@ -426,7 +428,9 @@ module.exports.load = async client => {
                             let member = server.members.cache.get(user.id);
                             let voiceChannel = member.voice.channel;
                             if (!voiceChannel) return { error: `${member.displayName} You have to be in voice channel in ${server.name} if you want to play something` }
-                            return client.distube.play(voiceChannel, newData.toString(), { member: member });
+                            return client.distube.play(voiceChannel, newData.toString(), { member: member }).catch(err => {
+                                return { error: err.message }
+                            });
                         },
                     },
                 ]
