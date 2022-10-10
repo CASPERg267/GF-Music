@@ -1,5 +1,5 @@
 const { onCoolDown } = require("../../structures/functions");
-const { EmbedBuilder, Permissions } = require("discord.js");
+const { EmbedBuilder, PermissionsBitField } = require("discord.js");
 
 module.exports = async (client, interaction) => {
     const CategoryName = interaction.commandName;
@@ -26,7 +26,7 @@ module.exports = async (client, interaction) => {
         let botchannels = client.settings.get(interaction.guildId, `botchannel`);
         if (!botchannels || !Array.isArray(botchannels)) botchannels = [];
         if (botchannels.length > 0) {
-            if (!botchannels.includes(interaction.channelId) && !interaction.member.permissions.has(Permissions.Flags.ADMINISTRATOR)) {
+            if (!botchannels.includes(interaction.channelId) && !interaction.member.PermissionsBitField.has(PermissionsBitField.Flags.Administrator)) {
                 return interaction.reply({
                     ephemeral: true,
                     embeds: [new EmbedBuilder()

@@ -113,7 +113,7 @@ function check_if_dj(client, member, song) {
         //add the role to the string
     }
     //if no dj and not an admin, return the string
-    if (!isdj && !member.permissions.has("ADMINISTRATOR") && song.user.id != member.id)
+    if (!isdj && !member.PermissionsBitField.has("ADMINISTRATOR") && song.user.id != member.id)
         return roleid.map(i => `<@&${i}>`).join(", ");
     //if he is a dj or admin, then return false, which will continue the cmd
     else

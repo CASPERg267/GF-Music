@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, Partials, Permissions, Collection } = require("discord.js");
+const { Client, GatewayIntentBits, Partials, PermissionsBitField, Collection } = require("discord.js");
 const { DisTube } = require('distube');
 const { YtDlpPlugin } = require("@distube/yt-dlp");
 const { SpotifyPlugin } = require('@distube/spotify');
@@ -37,16 +37,16 @@ class gfMusicClient extends Client {
         if (!this.token) this.token = this.config.token;
 
         this.requiredVoicePermissions = [
-            Permissions.Flags.VIEW_CHANNEL,
-            Permissions.Flags.CONNECT,
-            Permissions.Flags.SPEAK
+            PermissionsBitField.Flags.ViewChannel,
+            PermissionsBitField.Flags.Connect,
+            PermissionsBitField.Flags.Speak
         ];
         this.requiredTextPermissions = [
-            Permissions.Flags.VIEW_CHANNEL,
-            Permissions.Flags.SEND_MESSAGES,
-            Permissions.Flags.READ_MESSAGE_HISTORY,
-            Permissions.Flags.ADD_REACTIONS,
-            Permissions.Flags.EMBED_LINKS
+            PermissionsBitField.Flags.ViewChannel,
+            PermissionsBitField.Flags.SendMessages,
+            PermissionsBitField.Flags.ReadMessageHistory,
+            PermissionsBitField.Flags.AddReactions,
+            PermissionsBitField.Flags.EmbedLinks
         ];
 
         this.distube = new DisTube(this, {

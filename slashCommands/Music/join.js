@@ -14,7 +14,7 @@ module.exports = {
 		});
 
 		const { channel } = interaction.member.voice;
-		if (!interaction.guild.members.me.permissions.has(client.requiredVoicePermissions))
+		if (!interaction.guild.members.me.PermissionsBitField.has(client.requiredVoicePermissions))
 			return interaction.editReply({
 				embeds: [new EmbedBuilder()
 					.setDescription("I don't have perm `CONNECT` or `SPEAK` to execute command!")

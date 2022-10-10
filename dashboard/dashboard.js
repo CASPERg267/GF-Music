@@ -1,7 +1,7 @@
 const DBD = require('discord-dashboard');
 const DarkDashboard = require('dbd-dark-dashboard');
 const { check_if_dj } = require("../structures/functions");
-const { Permissions } = require("discord.js");
+const { PermissionsBitField } = require("discord.js");
 const session = require("express-session");
 const FileStore = require('session-file-store')(session);
 const { readdirSync } = require("fs");
@@ -58,7 +58,7 @@ module.exports.load = async client => {
         }),
         minimizedConsoleLogs: true,
         acceptPrivacyPolicy: true,
-        requiredPermissions: [DBD.DISCORD_FLAGS.Permissions.VIEW_CHANNEL], // Giving anyone access to use the dashboard, lol
+        requiredPermissions: [DBD.DISCORD_FLAGS.PermissionsBitField.VIEW_CHANNEL], // Giving anyone access to use the dashboard, lol
         rateLimits: {
             manage: {
                 windowMs: 15 * 60 * 1000, // 15 minutes
@@ -83,7 +83,7 @@ module.exports.load = async client => {
         invite: {
             clientId: client.config.dashboard.clientId,
             scopes: ["bot", "identify", "guilds"],
-            permissions: '274914954304',
+            PermissionsBitField: '274914954304',
             redirectUri: client.config.dashboard.redirectUri
         },
         supportServer: {
@@ -158,7 +158,7 @@ module.exports.load = async client => {
             commands: commands,
             guilds: {
                 cardTitle: "Servers",
-                cardDescription: "Here are all the servers you currenly have permissions for:",
+                cardDescription: "Here are all the servers you currenly have PermissionsBitField for:",
                 type: "blurlist"
             },
             guildInfo: {
@@ -449,7 +449,7 @@ module.exports.load = async client => {
                         setNew: async ({ guild, user, newData }) => {
                             let server = client.guilds.cache.get(guild.id);
                             let member = server.members.cache.get(user.id);
-                            if (member.permissions.has([Permissions.Flags.MANAGE_GUILD])) {
+                            if (member.PermissionsBitField.has([PermissionsBitField.Flags.ManageGuild])) {
                                 return client.settings.set(guild.id, newData, `defaultautoplay`);
                             } else return { error: `You don't have (Manage Server) permission in order to edit this setting` }
                         },

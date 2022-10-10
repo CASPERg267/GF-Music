@@ -1,4 +1,4 @@
-const { EmbedBuilder, Permissions, ChannelType } = require("discord.js");
+const { EmbedBuilder, PermissionsBitField, ChannelType } = require("discord.js");
 const { onCoolDown, escapeRegex } = require(`../../structures/functions`);
 const Statcord = require("statcord.js");
 
@@ -31,9 +31,9 @@ module.exports = async (client, message) => {
     const command = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
     if (!command) return;
 
-    if (!message.guild.members.me.permissions.has(client.requiredTextPermissions)) return message.author.dmChannel.send({
+    if (!message.guild.members.me.PermissionsBitField.has(client.requiredTextPermissions)) return message.author.dmChannel.send({
       embeds: [new EmbedBuilder()
-        .setDescription(`I don't have all of the permissions needed **[\`VIEW_CHANNEL\` \`SEND_MESSAGES\` \`READ_MESSAGE_HISTORY\` \`ADD_REACTIONS\` \`EMBED_LINKS\`]** in <#${message.channelId}> to execute a command!`)
+        .setDescription(`I don't have all of the PermissionsBitField needed **[\`ViewChannel\` \`SEND_MESSAGES\` \`READ_MESSAGE_HISTORY\` \`ADD_REACTIONS\` \`EMBED_LINKS\`]** in <#${message.channelId}> to execute a command!`)
         .setColor(client.config.embed.color)
         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
     }).catch(() => { });
@@ -64,7 +64,7 @@ module.exports = async (client, message) => {
       let botchannels = client.settings.get(message.guild.id, `botchannel`);
       if (!botchannels || !Array.isArray(botchannels)) botchannels = [];
       if (botchannels.length > 0) {
-        if (!botchannels.includes(message.channel.id) && !message.member.permissions.has(Permissions.Flags.ADMINISTRATOR)) {
+        if (!botchannels.includes(message.channel.id) && !message.member.PermissionsBitField.has(PermissionsBitField.Flags.Administrator)) {
           return message.reply({
             embeds: [new EmbedBuilder()
               .setColor(client.config.embed.color)
