@@ -39,10 +39,12 @@ module.exports = {
 
         const string = args.join(" ");
         if (!string) {
-            return message.channel.send(new EmbedBuilder()
-                .setDescription(`Please provide a song name or link.`)
-                .setColor(client.config.embed.color)
-                .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon }));
+            return message.channel.send({
+                embeds: [new EmbedBuilder()
+                    .setDescription(`Please provide a song name or link.`)
+                    .setColor(client.config.embed.color)
+                    .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
+            });
         }
 
         const options = {
@@ -51,6 +53,13 @@ module.exports = {
             message
         }
 
-        await client.distube.play(message.member.voice.channel, string, options);
+        await client.distube.play(message.member.voice.channel, string, options).catch(err => {
+            message.channel.send({
+                embeds: [new EmbedBuilder()
+                    .setDescription(err.message)
+                    .setColor(client.config.embed.color)
+                    .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
+            });
+        });
     }
 }

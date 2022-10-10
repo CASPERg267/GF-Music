@@ -79,7 +79,9 @@ class gfMusicClient extends Client {
                     },
                 }),
                 new SoundCloudPlugin(),
-                new YtDlpPlugin()
+                new YtDlpPlugin({
+                    update: false
+                })
             ]
         });
 

@@ -299,8 +299,8 @@ module.exports.load = async client => {
                             let queue = client.distube.getQueue(guild.id);
                             if (!queue) return;
                             else if (queue) {
-                                if (newData === `clear`) queue.setFilter(false);
-                            } else return queue.setFilter(newData);
+                                if (newData === `clear`) queue.filters.clear();
+                            } else return queue.filters.add(newData);
                         },
                     },
                     {
