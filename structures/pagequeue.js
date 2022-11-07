@@ -1,4 +1,4 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, ButtonBuilder } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 module.exports = async (client, message, pages, timeout, queueLength, queueDuration) => {
     if (!message && !message.channel) client.logger.error('Channel is inaccessible.', { label: `pageQueue` });
