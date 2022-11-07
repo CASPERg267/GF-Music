@@ -10,10 +10,10 @@ class gfMusicClient extends Client {
     constructor() {
         super({
             intents: [
-                GatewayIntentBits.Flags.Guilds,
-                GatewayIntentBits.Flags.GuildMessages,
-                GatewayIntentBits.Flags.GuildVoiceStates,
-                GatewayIntentBits.Flags.GuildMessageReactions
+                GatewayIntentBits.Guilds,
+                GatewayIntentBits.GuildMessages,
+                GatewayIntentBits.GuildVoiceStates,
+                GatewayIntentBits.GuildMessageReactions
             ],
             allowedMentions: {
                 parse: ["roles", "users"],
