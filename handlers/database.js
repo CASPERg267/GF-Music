@@ -5,7 +5,7 @@ module.exports = client => {
 
     client.infos = new Enmap({ name: "infos", dataDir: "./databases/infos", fetchAll: false });
 
-    client.autoresume = new Enmap({ name: "autoresume", dataDir: "./databases/infos", fetchAll: false });
+    client.autoresume = new Enmap({ name: "autoresume", dataDir: "./databases/infos" });
 
     client.stats = new Enmap({ name: "stats", dataDir: "./databases/stats", fetchAll: false });
 
