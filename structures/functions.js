@@ -113,7 +113,7 @@ function check_if_dj(client, member, song) {
         //add the role to the string
     }
     //if no dj and not an admin, return the string
-    if (!isdj && !member.PermissionsBitField.has("ADMINISTRATOR") && song.user.id != member.id)
+    if (!isdj && !member.permissions.has(PermissionsBitField.Flags.Administrator) && song.user.id != member.id)
         return roleid.map(i => `<@&${i}>`).join(", ");
     //if he is a dj or admin, then return false, which will continue the cmd
     else
@@ -211,8 +211,8 @@ function duration(duration, useMilli = false) {
 
 function escapeRegex(str) {
     try {
-      return str.replace(/[.*+?^${}()|[\]\\]/g, `\\$&`);
+        return str.replace(/[.*+?^${}()|[\]\\]/g, `\\$&`);
     } catch {
-      return str
+        return str
     }
-  }
+}

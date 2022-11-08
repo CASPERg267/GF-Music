@@ -26,7 +26,7 @@ module.exports = async (client, interaction) => {
         let botchannels = client.settings.get(interaction.guildId, `botchannel`);
         if (!botchannels || !Array.isArray(botchannels)) botchannels = [];
         if (botchannels.length > 0) {
-            if (!botchannels.includes(interaction.channelId) && !interaction.member.PermissionsBitField.has(PermissionsBitField.Flags.Administrator)) {
+            if (!botchannels.includes(interaction.channelId) && !interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
                 return interaction.reply({
                     ephemeral: true,
                     embeds: [new EmbedBuilder()
@@ -51,9 +51,8 @@ module.exports = async (client, interaction) => {
             });
         }
 
-        if (command.queue) {
-            const queue = client.distube.getQueue(interaction);
-            if (!queue) interaction.reply({
+        if (command.queue && !client.distube.getQueue(interaction)) {
+            interaction.reply({
                 ephemeral: true,
                 embeds: [new EmbedBuilder()
                     .setDescription("There is nothing in the queue right now!")

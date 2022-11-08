@@ -1,7 +1,7 @@
 const DBD = require('discord-dashboard');
 const DarkDashboard = require('dbd-dark-dashboard');
 const { check_if_dj } = require("../structures/functions");
-const { PermissionsBitField } = require("discord.js");
+const { PermissionsBitField, ChannelType } = require("discord.js");
 const session = require("express-session");
 const FileStore = require('session-file-store')(session);
 const { readdirSync } = require("fs");
@@ -58,7 +58,7 @@ module.exports.load = async client => {
         }),
         minimizedConsoleLogs: true,
         acceptPrivacyPolicy: true,
-        requiredPermissions: [DBD.DISCORD_FLAGS.PermissionsBitField.VIEW_CHANNEL], // Giving anyone access to use the dashboard, lol
+        requiredPermissions: [DBD.DISCORD_FLAGS.Permissions.VIEW_CHANNEL], // Giving anyone access to use the dashboard, lol
         rateLimits: {
             manage: {
                 windowMs: 15 * 60 * 1000, // 15 minutes
@@ -83,7 +83,7 @@ module.exports.load = async client => {
         invite: {
             clientId: client.config.dashboard.clientId,
             scopes: ["bot", "identify", "guilds"],
-            PermissionsBitField: '274914954304',
+            permissions: '274914954304',
             redirectUri: client.config.dashboard.redirectUri
         },
         supportServer: {
@@ -158,7 +158,7 @@ module.exports.load = async client => {
             commands: commands,
             guilds: {
                 cardTitle: "Servers",
-                cardDescription: "Here are all the servers you currenly have PermissionsBitField for:",
+                cardDescription: "Here are all the servers you currenly have permissions for:",
                 type: "blurlist"
             },
             guildInfo: {
@@ -188,8 +188,7 @@ module.exports.load = async client => {
                         getActualSet: async ({ guild }) => {
                             let songQ = client.distube.getQueue(guild.id);
                             if (!songQ) return false;
-                            else if (songQ.autoplay === true) return true;
-                            else return false;
+                            else return Boolean(songQ.autoplay)
                         },
                         setNew: async ({ guild, user, newData }) => {
                             return;
@@ -208,8 +207,7 @@ module.exports.load = async client => {
                         getActualSet: async ({ guild, user }) => {
                             let songQ = client.distube.getQueue(guild.id);
                             if (!songQ) return false;
-                            else if (songQ.paused) return true;
-                            else return false;
+                            else return Boolean(songQ.paused);
                         },
                         setNew: async ({ guild, user, newData }) => {
                             return;
@@ -225,8 +223,7 @@ module.exports.load = async client => {
                         optionType: DBD.formTypes.switch(true),
                         getActualSet: async ({ guild, user }) => {
                             let songQ = client.distube.getQueue(guild.id);
-                            if (!songQ) return false;
-                            else if (songQ.repeatMode === 0) return false;
+                            if (!songQ || songQ.repeatMode === 0) return false;
                             else if (songQ.repeatMode === 1) return true;
                         },
                         setNew: async ({ guild, user, newData }) => {
@@ -243,8 +240,7 @@ module.exports.load = async client => {
                         optionType: DBD.formTypes.switch(true),
                         getActualSet: async ({ guild, user }) => {
                             let songQ = client.distube.getQueue(guild.id);
-                            if (!songQ) return false;
-                            else if (songQ.repeatMode === 0) return false;
+                            if (!songQ || songQ.repeatMode === 0) return false;
                             else if (songQ.repeatMode === 2) return true;
                         },
                         setNew: async ({ guild, user, newData }) => {
@@ -277,13 +273,13 @@ module.exports.load = async client => {
                             const song = client.distube.play(vc, newData, { member: member }).catch(err => {
                                 return { error: err.message }
                             });
-                            const nsfw = client.settings.get(guild.id, `nsfw`);
+                            const nsfw = await client.settings.get(guild.id, `nsfw`);
                             if (newData) return song
                             else if (queue.songs.length === 1) {
                                 if (check_if_dj(client, member, queue.songs[0])) return { error: `${member.displayName} you are not allowed to play songs since you don't have the dj role is ${server.name}` }
                             }
-                            else if (song.age_restricted) {
-                                if (nsfw === false) return { error: `${member.displayName} This song is age restricted, to enable age restricted songs head to your server settings and toggle if on.` }
+                            else if (song.age_restricted && !nsfw) {
+                                return { error: `${member.displayName} This song is age restricted, to enable age restricted songs head to your server settings and toggle it on.` }
                             }
                         },
                     },
@@ -314,8 +310,7 @@ module.exports.load = async client => {
                             let server = client.guilds.cache.get(guild.id);
                             let member = server.members.cache.get(user.id);
                             let queue = client.distube.getQueue(guild.id);
-                            if (!queue) return `${member.displayName} Nothing in the server queue`;
-                            else if (!queue.songs || !queue.songs.length === 0) return `${member.displayName}There is nothing in the queue`;
+                            if (!queue || !queue.songs || !queue.songs.length === 0) return `${member.displayName} Nothing in the server queue`;
                             else return queue.songs.map(song => song.name).join("\n");
                         },
                         setNew: async ({ guild, user, newData }) => {
@@ -447,13 +442,12 @@ module.exports.load = async client => {
                         optionType: DBD.formTypes.switch(false),
                         getActualSet: async ({ guild, user }) => {
                             let autoPlay = await client.settings.get(guild.id, `defaultautoplay`);
-                            if (autoPlay === true) return true;
-                            else return false;
+                            return Boolean(autoPlay);
                         },
                         setNew: async ({ guild, user, newData }) => {
                             let server = client.guilds.cache.get(guild.id);
                             let member = server.members.cache.get(user.id);
-                            if (member.PermissionsBitField.has([PermissionsBitField.Flags.ManageGuild])) {
+                            if (member.permissions.has([PermissionsBitField.Flags.ManageGuild])) {
                                 return client.settings.set(guild.id, newData, `defaultautoplay`);
                             } else return { error: `You don't have (Manage Server) permission in order to edit this setting` }
                         },
@@ -470,8 +464,7 @@ module.exports.load = async client => {
                         optionType: DBD.formTypes.switch(false),
                         getActualSet: async ({ guild, user }) => {
                             let nsfw = await client.settings.get(guild.id, `nsfw`);
-                            if (nsfw === true) return true;
-                            else return false;
+                            return Boolean(nsfw);
                         },
                         setNew: async ({ guild, user, newData }) => {
                             return client.settings.set(guild.id, newData, `nsfw`);
@@ -489,7 +482,7 @@ module.exports.load = async client => {
                         optionType: DBD.formTypes.input(`new prefix must be a between 1/3 characters`, 1, 3, false, false),
                         getActualSet: async ({ guild, user }) => {
                             let prefix = await client.settings.get(guild.id, `prefix`);
-                            return prefix;
+                            return String(prefix);
                         },
                         setNew: async ({ guild, user, newData }) => {
                             return client.settings.set(guild.id, newData, `prefix`);
@@ -512,7 +505,7 @@ module.exports.load = async client => {
                         optionId: 'botChannel',
                         optionName: "Bot Channel",
                         optionDescription: "Set a bot chat where users can control the bot.",
-                        optionType: DBD.formTypes.channelsSelect(false, [`GUILD_TEXT`]),
+                        optionType: DBD.formTypes.channelsSelect(false, [ChannelType.GuildText]),
                         getActualSet: async ({ guild, user }) => {
                             let botChannel = await client.settings.get(guild.id, `botchannel`);
                             return botChannel.toString();

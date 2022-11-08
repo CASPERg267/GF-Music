@@ -1,4 +1,4 @@
-const DisTube = require("distube");
+const { Song, SearchResult } = require("distube");
 const { delay } = require(`../structures/functions`);
 
 module.exports = client => {
@@ -33,8 +33,8 @@ module.exports = client => {
             continue;
           }
           const makeTrack = async track => {
-            return new DisTube.Song(
-              new DisTube.SearchResult({
+            return new Song(
+              new SearchResult({
                 duration: track.duration,
                 formattedDuration: track.formattedDuration,
                 id: track.id,
