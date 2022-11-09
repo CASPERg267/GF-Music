@@ -2,7 +2,7 @@ const { EmbedBuilder } = require("discord.js");
 const { databasing } = require("../../structures/functions");
 
 module.exports = async (client, guild) => {
-    if (!guild || guild.available === false) return;
+    if (!guild || !guild.available) return;
     let guildOwner = "No owner data fetched";
     await guild.fetchOwner().then(({
         user
@@ -24,5 +24,5 @@ module.exports = async (client, guild) => {
             ]
         })
     }
-    client.logger.info(`I have joined a new server **Server Name: ${guild.name}, Server Id: ${guild.id}, Member count: ${guild.members.memberCount}, Owner: ${guildOwner}, Owner Id: ${guildOwner.id}**`, { label: `guildCreate`})
+    client.logger.info(`I have joined a new server **Server Name: ${guild.name}, Server Id: ${guild.id}, Member count: ${guild.memberCount}, Owner: ${guildOwner}, Owner Id: ${guildOwner.id}**`, { label: `guildCreate`})
 }

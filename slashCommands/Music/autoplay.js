@@ -9,15 +9,19 @@ module.exports = {
     run: async (client, interaction) => {
         try {
             const channel = interaction.member.voice;
-            if (!channel) return interaction.reply({
-                embeds: [
-                    new EmbedBuilder()
-                        .setColor(client.config.embed.color)
-                        .setTitle(`Please join a voice channel first!`)
-                        .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
-                ],
-                ephemeral: true
-            })
+            if (!channel) {
+                interaction.reply({
+                    embeds: [
+                        new EmbedBuilder()
+                            .setColor(client.config.embed.color)
+                            .setTitle(`Please join a voice channel first!`)
+                            .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
+                    ],
+                    ephemeral: true
+                })
+                return
+            }
+            
             if (channel.guild.members.me.voice.channel && channel.guild.members.me.voice.channel.id != channel.id) {
                 return interaction.reply({
                     embeds: [new EmbedBuilder()

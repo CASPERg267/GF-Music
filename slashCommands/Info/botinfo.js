@@ -16,7 +16,7 @@ module.exports = {
                     let connectedchannelsamount = 0;
                     let guilds = client.guilds.cache.map((guild) => guild);
                     for (let i = 0; i < guilds.length; i++) {
-                        if (guilds[i].me.voice.channel) connectedchannelsamount += 1;
+                        if (guilds[i].members.me.voice.channel) connectedchannelsamount += 1;
                     }
                     if (connectedchannelsamount > client.guilds.cache.size) connectedchannelsamount = client.guilds.cache.size;
 
@@ -52,7 +52,7 @@ module.exports = {
                     let connectedchannelsamount = 0;
                     let guilds = client.guilds.cache.map((guild) => guild);
                     for (let i = 0; i < guilds.length; i++) {
-                        if (guilds[i].me.voice.channel) connectedchannelsamount += 1;
+                        if (guilds[i].members.me.voice.channel) connectedchannelsamount += 1;
                     }
                     if (connectedchannelsamount > client.guilds.cache.size) connectedchannelsamount = client.guilds.cache.size;
                     const botinfo = new EmbedBuilder()
