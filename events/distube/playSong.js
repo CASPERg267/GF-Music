@@ -142,7 +142,7 @@ function Queue(nowQueue, nowTrack) {
     .setColor(config.embed.color)
     .addFields([{ name: `Track Uploader:`, value: `**[${nowTrack.uploader.name}](${nowTrack.uploader.url})**`, inline: true },
     { name: `Current Player Volume:`, value: `${nowQueue.volume}%`, inline: true },
-    { name: `Player Filters:`, value: `${nowQueue.filters.name.join(", ") || "Normal"}`, inline: true },
+    { name: `Player Filters:`, value: `>>> ${nowQueue.filters && nowQueue.filters.length > 0 ? `${nowQueue.filters.map(f=>`\`${f}\``).join(`, `)}` : `Normal`}`, inline: true },
     { name: `Autoplay Mode:`, value: `${nowQueue.autoplay ? "On" : "Off"}`, inline: true },
     { name: `Total Playlist Duration:`, value: `${nowQueue.formattedDuration}`, inline: true },
     { name: `Current Track Duration:`, value: `${createBar(nowQueue.songs[0].duration, nowQueue.currentTime, 13)} \`${nowQueue.songs[0].formattedDuration}\`` }])
