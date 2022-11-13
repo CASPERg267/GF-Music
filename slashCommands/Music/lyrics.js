@@ -46,7 +46,7 @@ module.exports = {
             .setDescription(`**${song}**\n${lyrics}`);
 
         if (lyrics.length > 2048) {
-            lyricsEmbed.setDescription(lyrics.substr(0, 2045));
+            lyricsEmbed.setDescription(lyrics.substring(0, 2045));
         }
 
         interaction.reply({ embeds: [lyricsEmbed], ephemeral: true });

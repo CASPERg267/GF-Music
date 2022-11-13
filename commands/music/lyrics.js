@@ -56,7 +56,7 @@ module.exports = {
             .setTimestamp();
 
         if (lyrics.length > 2048) {
-            lyricsEmbed.setDescription(lyrics.substr(0, 2045));
+            lyricsEmbed.setDescription(lyrics.substring(0, 2045));
         }
 
         msg.edit({ embeds: [lyricsEmbed] })

@@ -4,6 +4,7 @@ module.exports = {
     name: "queue",
     description: "get a list of the current Queue",
     cooldown: 10,
+    queue: true,
 
     run: async (client, interaction) => {
         try {
@@ -29,16 +30,6 @@ module.exports = {
                 });
             }
             try {
-                let newQueue = client.distube.getQueue(interaction.guildId);
-                if (!newQueue || !newQueue.songs || newQueue.songs.length == 0) return interaction.reply({
-                    embeds: [
-                        new EmbedBuilder()
-                            .setColor(client.config.embed.color)
-                            .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
-                            .setDescription(`**I am nothing Playing right now!**`)
-                    ],
-                    ephemeral: true
-                })
                 let embeds = [];
                 let k = 10;
                 let theSongs = newQueue.songs;
@@ -47,7 +38,7 @@ module.exports = {
                     let qus = theSongs;
                     const current = qus.slice(i, k)
                     let j = i;
-                    const info = current.map((track) => `**${j++} -** [\`${String(track.name).replace(/\[/igu, "{").replace(/\]/igu, "}").substr(0, 60)}\`](${track.url}) - \`${track.formattedDuration}\``).join("\n")
+                    const info = current.map((track) => `**${j++} -** [\`${String(track.name).replace(/\[/igu, "{").replace(/\]/igu, "}").substring(0, 60)}\`](${track.url}) - \`${track.formattedDuration}\``).join("\n")
                     const embed = new EmbedBuilder()
                         .setColor(client.config.embed.color)
                         .setDescription(`${info}`)
@@ -70,11 +61,16 @@ module.exports = {
                     .setPlaceholder("Select a Page")
                     .addOptions([
                         pages.map((page, index) => {
-                            let Obj = {};
+                            return {
+                                label: `Page ${index}`,
+                                value: index,
+                                description: `Shows the ${index}/${pages.length - 1} Page!`
+                            }
+                            /*let Obj = {};
                             Obj.label = `Page ${index}`
                             Obj.value = `${index}`;
                             Obj.description = `Shows the ${index}/${pages.length - 1} Page!`
-                            return Obj;
+                            return Obj;*/
                         })
                     ])
                 const row = new ActionRowBuilder()

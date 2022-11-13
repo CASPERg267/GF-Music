@@ -276,7 +276,7 @@ module.exports.load = async client => {
                             const nsfw = await client.settings.get(guild.id, `nsfw`);
                             if (newData) return song
                             else if (queue.songs.length === 1) {
-                                if (check_if_dj(client, member, queue.songs[0])) return { error: `${member.displayName} you are not allowed to play songs since you don't have the dj role is ${server.name}` }
+                                if (check_if_dj(client, member, queue.songs[0])) return { error: `${member.displayName} you are not allowed to play songs since you don't have the dj role in ${server.name}` }
                             }
                             else if (song.age_restricted && !nsfw) {
                                 return { error: `${member.displayName} This song is age restricted, to enable age restricted songs head to your server settings and toggle it on.` }
@@ -537,19 +537,19 @@ module.exports.load = async client => {
     });
 
     Dashboard.DBDEvents.on('userLoggedIn', (data) => {
-        if (client.config.dashboard.events.userLoggedIn === true) {
+        if (client.config.dashboard.events.userLoggedIn) {
             client.logger.silly(`New user has logged in: ${JSON.stringify(data)}`, { label: `Dashboard` })
         }
     });
 
     Dashboard.DBDEvents.on('websiteView', (data) => {
-        if (client.config.dashboard.events.websiteView === true) {
+        if (client.config.dashboard.events.websiteView) {
             client.logger.silly(`New user viewed bot website: ${JSON.stringify(data)}`, { label: `Dashboard` })
         }
     });
 
     Dashboard.DBDEvents.on('guildSettingsUpdated', (data) => {
-        if (client.config.dashboard.events.guildSettingsUpdated === true) {
+        if (client.config.dashboard.events.guildSettingsUpdated) {
             client.logger.silly(`New user updated guild settings: ${JSON.stringify(data)}`, { label: `Dashboard` })
         }
     });
