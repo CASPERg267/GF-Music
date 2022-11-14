@@ -31,6 +31,7 @@ module.exports = {
         "redirectUri": "", // redirect uri should be http://your.domain/discord/callback
         "clientId": "" || process.env.clientId, // you bot client id https://discord.com/developers/applications
         "clientSecret": "" || process.env.clientSecret, // https://discord.com/developers/applications
+        "updateFeeds": 20, //update feeds every 20 second, the faster update intervals the more resource being used
         "events": {
             "userLoggedIn": false, // if you want to get informed about who logged into your dashboard
             "websiteView": false, // if you want to get informed about who viewed your dashboard

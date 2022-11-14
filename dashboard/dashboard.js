@@ -38,7 +38,6 @@ module.exports.load = async client => {
 
     await DBD.useLicense(client.config.dashboard.license);
     DBD.Dashboard = DBD.UpdatedClass();
-    const global = client.stats.get("global");
     const Dashboard = new DBD.Dashboard({
         port: client.config.dashboard.port,
         client: {
@@ -148,7 +147,7 @@ module.exports.load = async client => {
                 },
                 feeds: setInterval(() => {
                     upateFeeds(client)
-                }, 20000),
+                }, Number(config.dashboard.updateFeeds) * 1000),
             },
             commands: commands,
             guilds: {

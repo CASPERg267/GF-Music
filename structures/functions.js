@@ -218,10 +218,11 @@ function escapeRegex(str) {
     }
 }
 
-async function updateFeeds(client) {
+function updateFeeds(client) {
+    const global = client.stats.get("global");
     let feeds = {};
     feeds.category = `About ${client.user.username}`;
     feeds.title = `Information`;
     feeds.description = `${global.commands * [...client.guilds.cache.values()].length / 10} Command has been used in all servers | ${Math.ceil(global.songs * [...client.guilds.cache.values()].length / 10)} Song has been played in all servers`;
-    feeds.footer = `${client.user.username} uptime is ${pms(client.uptime)}`
+    feeds.footer = `${client.user.username} uptime is ${pms(client.uptime)}`;
 }
