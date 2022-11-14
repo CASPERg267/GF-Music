@@ -1,6 +1,6 @@
 const DBD = require('discord-dashboard');
 const DarkDashboard = require('dbd-dark-dashboard');
-const { check_if_dj } = require("../structures/functions");
+const { check_if_dj, upateFeeds } = require("../structures/functions");
 const { PermissionsBitField, ChannelType } = require("discord.js");
 const session = require("express-session");
 const FileStore = require('session-file-store')(session);
@@ -9,7 +9,6 @@ const categories = readdirSync("./commands/");
 const playerActions = require(`../assests/playerActions.json`);
 const playerFilters = require(`../assests/playerFilters.json`);
 const playlistMixes = require(`../assests/playlistMixes.json`);
-//const pms = require('pretty-ms');
 
 module.exports.load = async client => {
     // commands listing
@@ -147,13 +146,9 @@ module.exports.load = async client => {
                     description: `${client.user.username} Total Commands: ${client.commands.size}`,
                     footer: `You can check them from ${client.config.dashboard.domain}/commands`,
                 },
-
-                feeds: {
-                    category: `About ${client.user.username}`,
-                    title: "Information",
-                    description: `${global.commands * [...client.guilds.cache.values()].length / 10} Command has been used in all servers | ${Math.ceil(global.songs * [...client.guilds.cache.values()].length / 10)} Song has been played in all servers`,
-                    footer: `${client.user.username} Stats`,
-                },
+                feeds: setInterval(() => {
+                    upateFeeds(client)
+                }, 20000),
             },
             commands: commands,
             guilds: {
@@ -556,9 +551,9 @@ module.exports.load = async client => {
 
     DBD.customPagesTypes.redirectToUrl(`github`, `https://github.com/CASPERg267/GF-Music`);
 
-        await Dashboard.init().then(
-            client.spawned = true).catch(err => {
-                client.logger.error(`Dashboard failed to initialize: ${err}`, { label: `Dashboard` })
-            })
+    await Dashboard.init().then(
+        client.spawned = true).catch(err => {
+            client.logger.error(`Dashboard failed to initialize: ${err}`, { label: `Dashboard` })
+        })
     client.logger.info(`Dashboard launched on port ${client.config.dashboard.port}`, { label: `Dashboard` })
 }

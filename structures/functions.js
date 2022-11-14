@@ -1,5 +1,6 @@
 const { Collection } = require("discord.js");
 const logger = require("./logger");
+const pms = require('pretty-ms');
 
 module.exports.databasing = databasing;
 module.exports.isValidURL = isValidURL;
@@ -215,4 +216,12 @@ function escapeRegex(str) {
     } catch {
         return str
     }
+}
+
+async function updateFeeds(client) {
+    let feeds = {};
+    feeds.category = `About ${client.user.username}`;
+    feeds.title = `Information`;
+    feeds.description = `${global.commands * [...client.guilds.cache.values()].length / 10} Command has been used in all servers | ${Math.ceil(global.songs * [...client.guilds.cache.values()].length / 10)} Song has been played in all servers`;
+    feeds.footer = `${client.user.username} uptime is ${pms(client.uptime)}`
 }
