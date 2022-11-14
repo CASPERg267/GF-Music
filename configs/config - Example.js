@@ -1,13 +1,8 @@
 module.exports = {
     token: "" || process.env.token, // token of your bot, be careful to not share it with anyone https://discord.com/developers/applications
-    clientId: "" || process.env.clientId, // you bot client id https://discord.com/developers/applications
     prefix: "-", // prefix of your bot
     debug: false, // true if you want debug info logged into your console
     statcord_token: "" || process.env.statcord_token, // your statcord token, useful to give you accurate info about your bot https://statcord.com
-    splintr: {
-        splintr_key: "" || process.env.splintr_key, // your splintr key, useful to give you accurate info about your bot https://splintr.uk
-        splintr_name: "" || process.env.splintr_name // your splintr bot name same on dashboard
-    },
     topgg_token: "" || process.env.topgg_token, // if your bot is listed on top.gg fill here to post stats into your bot page, leave blank if don't have it
     youtube_Cookie: "" || process.env.cookie, // needed to play age restricted songs, leave blank if you don't have it
     webhook: { // needed to log all the info you need about your bot
@@ -34,7 +29,7 @@ module.exports = {
         "port": 80, // open port for the dashboard
         "domain": "", // http://your.domain
         "redirectUri": "", // redirect uri should be http://your.domain/discord/callback
-        "clientId": "" || process.env.clientId, // https://discord.com/developers/applications
+        "clientId": "" || process.env.clientId, // you bot client id https://discord.com/developers/applications
         "clientSecret": "" || process.env.clientSecret, // https://discord.com/developers/applications
         "events": {
             "userLoggedIn": false, // if you want to get informed about who logged into your dashboard
