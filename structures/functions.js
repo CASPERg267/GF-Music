@@ -11,6 +11,7 @@ module.exports.createBar = createBar;
 module.exports.delay = delay;
 module.exports.duration = duration;
 module.exports.escapeRegex = escapeRegex;
+module.exports.updateFeeds = updateFeeds;
 
 function getRandomNum(min, max) {
     try {

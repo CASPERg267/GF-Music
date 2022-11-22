@@ -1,6 +1,6 @@
 const DBD = require('discord-dashboard');
 const DarkDashboard = require('dbd-dark-dashboard');
-const { check_if_dj, upateFeeds } = require("../structures/functions");
+const { check_if_dj, updateFeeds } = require("../structures/functions");
 const { PermissionsBitField, ChannelType } = require("discord.js");
 const session = require("express-session");
 const FileStore = require('session-file-store')(session);
@@ -146,7 +146,7 @@ module.exports.load = async client => {
                     footer: `You can check them from ${client.config.dashboard.domain}/commands`,
                 },
                 feeds: setInterval(() => {
-                    upateFeeds(client)
+                    updateFeeds(client)
                 }, Number(client.config.dashboard.updateFeeds) * 1000),
             },
             commands: commands,
