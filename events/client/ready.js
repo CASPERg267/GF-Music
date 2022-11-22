@@ -1,3 +1,5 @@
+const { ActivityType } = require("discord.js");
+
 module.exports = async (client) => {
 
   client.logger.info(`${client.user.username} is now ready`, { label: `Ready` })
@@ -17,6 +19,6 @@ module.exports = async (client) => {
   ]
 
   setInterval(() => {
-    client.user.setActivity(`${activities[Math.floor(Math.random() * activities.length)]}`, { type: 'WATCHING' });
+    client.user.setActivity(`${activities[Math.floor(Math.random() * activities.length)]}`, { type: ActivityType.Watching });
   }, 35000)
 }
