@@ -20,5 +20,5 @@ module.exports = async (client) => {
 
   setInterval(() => {
     client.user.setActivity(`${activities[Math.floor(Math.random() * activities.length)]}`, { type: ActivityType.Watching });
-  }, 35000)
+  }, Number(client.config.activityInterval) * 1000)
 }

@@ -31,7 +31,8 @@ class gfMusicClient extends Client {
         this.cooldowns = new Collection();
         this.lyrics = new Genius.Client(this.config.geniusApiToken);
         this.logger = require("./structures/logger");
-        this.maps = new Map();
+        this.PlayerMap = new Map();
+        this.playerintervals = new Map();
         this.setMaxListeners(100); require('events').defaultMaxListeners = 100;
         this.owner = this.config.ownerId;
         if (!this.token) this.token = this.config.token;

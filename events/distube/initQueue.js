@@ -3,8 +3,8 @@ const playerintervals = new Map();
 
 module.exports = (client, queue) => {
 
-    if (PlayerMap.has(`deleted-${queue.id}`)) {
-        PlayerMap.delete(`deleted-${queue.id}`)
+    if (client.PlayerMap.has(`deleted-${queue.id}`)) {
+        client.PlayerMap.delete(`deleted-${queue.id}`)
     }
     let data = client.settings.get(queue.id)
     queue.autoplay = Boolean(data.defaultautoplay);
@@ -65,6 +65,6 @@ module.exports = (client, queue) => {
                 return true;
             }
         }
-    }, 5000);
-    playerintervals.set(`autoresumeinterval-${queue.id}`, autoresumeinterval);
+    }, Number(client.config.autoResumeInterval) * 1000);
+    client.playerintervals.set(`autoresumeinterval-${queue.id}`, autoresumeinterval);
 }
