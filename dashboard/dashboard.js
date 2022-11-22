@@ -147,7 +147,7 @@ module.exports.load = async client => {
                 },
                 feeds: setInterval(() => {
                     upateFeeds(client)
-                }, Number(config.dashboard.updateFeeds) * 1000),
+                }, Number(client.config.dashboard.updateFeeds) * 1000),
             },
             commands: commands,
             guilds: {
