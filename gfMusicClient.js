@@ -34,8 +34,6 @@ class gfMusicClient extends Client {
         this.PlayerMap = new Map();
         this.playerintervals = new Map();
         this.setMaxListeners(100); require('events').defaultMaxListeners = 100;
-        this.owner = this.config.ownerId;
-        if (!this.token) this.token = this.config.token;
 
         this.requiredVoicePermissions = [
             PermissionsBitField.Flags.ViewChannel,
@@ -58,7 +56,7 @@ class gfMusicClient extends Client {
             savePreviousSongs: true, // should be needed for autoplay function
             emitAddSongWhenCreatingQueue: false,
             searchSongs: 0,
-            youtubeCookie: this.config.youtube_Cookie,
+            youtubeCookie: this.config?.youtube_Cookie,
             nsfw: true, // if you want your bot to play age restricted songs
             emptyCooldown: 25,
             ytdlOptions: {
@@ -74,8 +72,8 @@ class gfMusicClient extends Client {
                     parallel: true,
                     emitEventsAfterFetching: false,
                     api: {
-                        clientId: this.config.spotify.clientId,
-                        clientSecret: this.config.spotify.clientSecret,
+                        clientId: this.config.spotify?.clientId,
+                        clientSecret: this.config.spotify?.clientSecret,
                     },
                 }),
                 new SoundCloudPlugin(),

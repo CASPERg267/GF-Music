@@ -4,6 +4,7 @@ module.exports = {
     name: "volume",
     description: "Adjusts the Volume of the Music",
     cooldown: 10,
+    queue: true,
     options: [
         {
             "Integer": {
@@ -13,54 +14,24 @@ module.exports = {
             }
         },
     ],
-    run: async (client, interaction) => {
-        try {
-            const { channel } = interaction.member.voice;
-            if (!channel) return interaction.reply({
-                embeds: [
-                    new EmbedBuilder()
-                        .setColor(client.config.embed.color)
-                        .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
-                        .setDescription(`**Please join Voice Channel First!**`)
-                ],
-                ephemeral: true
-            })
-            if (channel.guild.members.me.voice.channel && channel.guild.members.me.voice.channel.id != channel.id) {
-                return interaction.reply({
-                    embeds: [new EmbedBuilder()
-                        .setColor(client.config.embed.color)
-                        .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
-                        .setTitle(`Join my Voice Channel!`)
-                        .setDescription(`<#${interaction.guild.members.me.voice.channel.id}>`)
-                    ],
-                    ephemeral: true
-                });
-            }
-            try {
-                let queue = client.distube.getQueue(interaction);
+    run: async (client, interaction, queue) => {
 
-                let volume = interaction.options.getInteger("volume")
-                if (volume > 100 || volume < 0) return interaction.reply({
-                    embeds: [
-                        new EmbedBuilder()
-                            .setColor(client.config.embed.color)
-                            .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
-                            .setDescription(`**The Volume must be between \`0\` and \`100\`!**`)
-                    ],
-                    ephemeral: true
-                })
-                await queue.setVolume(volume);
-                interaction.reply({
-                    embeds: [new EmbedBuilder()
-                        .setColor(client.config.embed.color)
-                        .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
-                        .setDescription(`Changed the Volume to \`${volume}\`!`)]
-                })
-            } catch (e) {
-                console.log(e)
-            }
-        } catch (e) {
-            console.log(e)
-        }
+        let volume = interaction.options.getInteger("volume")
+        if (volume > 100 || volume < 0) return interaction.reply({
+            embeds: [
+                new EmbedBuilder()
+                    .setColor(client.config.embed.color)
+                    .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
+                    .setDescription(`**The Volume must be between \`0\` and \`100\`!**`)
+            ],
+            ephemeral: true
+        })
+        await queue.setVolume(volume);
+        interaction.reply({
+            embeds: [new EmbedBuilder()
+                .setColor(client.config.embed.color)
+                .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
+                .setDescription(`Changed the Volume to \`${volume}\`!`)]
+        })
     }
 }
