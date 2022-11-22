@@ -38,6 +38,8 @@ module.exports = async (client, message) => {
         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
     }).catch(() => { });
 
+    if (command.category === "owner" && !config.ownerId.includes(message.author.id)) return;
+
     //Check if user is on cooldown with the cmd, with Tomato#6966's Function
     if (onCoolDown(message, command)) {
       return message.reply({
@@ -80,8 +82,8 @@ module.exports = async (client, message) => {
         client.stats.inc("global", "commands");
         if (client.config.statcord_token && client.shard) {
             Statcord.ShardingClient.postCommand(command, message.author.id, client);
-          } else {
-            statcord.postCommand(command, message.author.id);
+          } else if (client.config.statcord_token) {
+            Statcord.postCommand(command, message.author.id);
           }
         command.run(client, message, args);
       } catch (e) {

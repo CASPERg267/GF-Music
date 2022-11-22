@@ -10,6 +10,7 @@ module.exports = {
 
     run: async (client, message, args) => {
         let prefix = client.settings.get(message.guild.id, `prefix`);
+        let owners = client.config.ownerId.includes(message.author.id);
         client.logger.info(`[COMMAND] Help used by ${message.author.tag} from ${message.guild.name}`, { label: `Help Command` });
         const embed = new EmbedBuilder()
             .setColor(client.config.embed.color)
@@ -24,7 +25,7 @@ module.exports = {
             embed.setFooter({ text: `© ${message.guild.members.me.displayName} | Total Commands: ${client.commands.size}`, iconURL: client.config.embed.footer_icon });
 
             categories.forEach(category => {
-                const dir = client.commands.filter(c => c.category === category)
+                const dir = client.commands.filter(c => c.category !== `owner`)
                 const capitalise = category.slice(0, 1).toUpperCase() + category.slice(1)
                 try {
                     embed.addFields([{ name: `❯ ${capitalise} [${dir.size}]:`, value: dir.map(c => `\`${c.name}\``).join(" ") }])
