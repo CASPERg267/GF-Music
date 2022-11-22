@@ -1,12 +1,9 @@
 const { ChannelType } = require("discord.js");
 
 module.exports = async (client, guild) => {
-    if (!guild || guild.available === false) return;
+    if (!guild || !guild.available) return;
 
-    const queue = client.distube.getQueue(guild);
-    if (queue) {
-        queue.stop();
-    }
+    const queue = client.distube.getQueue(guild)?.stop();
     let guildOwner = "No owner data fetched";
     await guild.fetchOwner().then(({
         user

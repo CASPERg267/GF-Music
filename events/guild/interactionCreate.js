@@ -1,16 +1,10 @@
-const { onCoolDown } = require("../../structures/functions");
+const { onCoolDown, databasing } = require("../../structures/functions");
 const { EmbedBuilder, PermissionsBitField } = require("discord.js");
 
 module.exports = async (client, interaction) => {
     const CategoryName = interaction.commandName;
-    client.settings.ensure(interaction.guildId, {
-        prefix: client.config.prefix,
-        defaultvolume: 100,
-        defaultautoplay: true,
-        nsfw: false,
-        djroles: [],
-        botchannel: [],
-    });
+    databasing(client, interaction.guild.id);
+    const queue = client.distube.getQueue(interaction);
 
     let command = false;
     try {
@@ -39,6 +33,48 @@ module.exports = async (client, interaction) => {
             }
         }
 
+        if (!interaction.member.voice) {
+            return interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                        .setColor(client.config.embed.color)
+                        .setTitle(`Please join a voice channel first!`)
+                        .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
+                ],
+                ephemeral: true
+            })
+        }
+
+        if (interaction.guild.members.me.voice.channel && interaction.guild.members.me.voice.channel.id != interaction.member.voice.id) {
+            return interaction.reply({
+                embeds: [new EmbedBuilder()
+                    .setColor(client.config.embed.color)
+                    .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
+                    .setTitle(`Join my Voice Channel!`)
+                    .setDescription(`<#${interaction.guild.members.me.voice.channel.id}>`)
+                ],
+                ephemeral: true
+            });
+        }
+
+        if (!interaction.guild.members.me.permissions.has(client.requiredVoicePermissions)) {
+            return interaction.reply({
+                embeds: [new EmbedBuilder()
+                    .setDescription("I don't have perm `CONNECT` or `SPEAK` to execute command!")
+                    .setColor(client.config.embed.color)
+                    .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
+            });
+        }
+
+        if (!interaction.guild.members.me.permissionsIn(interaction.member.voice).has(client.requiredVoicePermissions)) {
+            return interaction.reply({
+                embeds: [new EmbedBuilder()
+                    .setDescription(`I don't have perm **[\`CONNECT\` or \`SPEAK\`]** in ${interaction.member.voice.name} to join voice!`)
+                    .setColor(client.config.embed.color)
+                    .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
+            });
+        }
+
         if (onCoolDown(interaction, command)) {
             return interaction.reply({
                 ephemeral: true,
@@ -46,12 +82,12 @@ module.exports = async (client, interaction) => {
                     .setColor(client.config.embed.color)
                     .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                     .setDescription(`You have to wait for ${onCoolDown(interaction, command)} in order to use command:**${command}** again.`)
-                    .addFields([{ name: `Why is there is a cooldown?`, value: `We apologize for that, but in order to make bot work for everyone else we you should wait, so other users could use the bot without any issues, Thanks for understanding.`}])
+                    .addFields([{ name: `Why is there is a cooldown?`, value: `We apologize for that, but in order to make bot work for everyone else we you should wait, so other users could use the bot without any issues, Thanks for understanding.` }])
                 ]
             });
         }
 
-        if (command.queue && !client.distube.getQueue(interaction)) {
+        if (command.queue && !queue) {
             interaction.reply({
                 ephemeral: true,
                 embeds: [new EmbedBuilder()
@@ -63,7 +99,7 @@ module.exports = async (client, interaction) => {
         try {
             client.stats.inc(interaction.guildId, "commands");
             client.stats.inc("global", "commands");
-            await command.run(client, interaction)
+            await command.run(client, interaction, queue)
         } catch (e) {
             client.logger.error(`Something went wrong while running a command **[${e}]**`, { label: `interactionCreate` })
             const embed = new EmbedBuilder()

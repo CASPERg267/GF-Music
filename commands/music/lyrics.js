@@ -7,23 +7,7 @@ module.exports = {
     category: "music",
     queue: true,
 
-    run: async (client, message, args) => {
-
-        const msg = await message.channel.send({
-            embeds: [new EmbedBuilder()
-                .setDescription("Searching for lyrics...")
-                .setColor(client.config.embed.color)
-                .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
-        });
-
-        const queue = client.distube.getQueue(message);
-        const { channel } = message.member.voice;
-        if (!channel || message.member.voice.channel !== message.guild.members.me.voice.channel) return msg.edit({
-            embeds: [new EmbedBuilder()
-                .setDescription("You need to be in a same/voice channel.")
-                .setColor(client.config.embed.color)
-                .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
-        })
+    run: async (client, message, args, prefix, queue) => {
 
         let song = args.join(" ");
         let CurrentSong = queue.songs[0];
@@ -33,7 +17,7 @@ module.exports = {
 
         try {
             lyrics = await client.lyrics.songs.search(song);
-            if (!lyrics) msg.edit({
+            if (!lyrics) message.reply({
                 embeds: [new EmbedBuilder()
                     .setDescription(`Couldn't find any lyrics for that song!`)
                     .setColor(client.config.embed.color)
@@ -41,7 +25,7 @@ module.exports = {
             });
         } catch (err) {
             console.log(err);
-            msg.edit({
+            message.reply({
                 embeds: [new EmbedBuilder()
                     .setDescription(`Couldn't find any lyrics for that song!`)
                     .setColor(client.config.embed.color)
@@ -59,7 +43,7 @@ module.exports = {
             lyricsEmbed.setDescription(lyrics.substring(0, 2045));
         }
 
-        msg.edit({ embeds: [lyricsEmbed] })
+        message.reply({ embeds: [lyricsEmbed] })
             .then(n => {
                 var total = queue.songs[0].duration * 1000;
                 var current = queue.currentTime * 1000;

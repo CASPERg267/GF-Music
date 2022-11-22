@@ -7,32 +7,20 @@ module.exports = {
     category: "music",
     queue: true,
 
-    run: async (client, message) => {
-        const msg = await message.channel.send({
-            embeds: [new EmbedBuilder()
-                .setDescription("Processing.....")
-                .setColor(client.config.embed.color)
-                .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
-        });
-        const queue = client.distube.getQueue(message);
+    run: async (client, message, args, prefix, queue) => {
         const clientVoice = message.guild.members.me.voice.channel;
         const memberVoice = message.member.voice.channel;
 
         if (clientVoice === memberVoice) {
-            if (queue) {
-                queue.stop();
-                client.distube.voices.leave(message.guild);
-            } else {
-                client.distube.voices.leave(message.guild);
-            }
+            queue.stop();
+            client.distube.voices.leave(message.guild);
 
             const embed = new EmbedBuilder()
                 .setDescription(`**Left \`${memberVoice.name}\`**`)
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
 
-            msg.edit({ embeds: [embed] });
-
+            message.reply({ embeds: [embed] });
         }
     }
 }
