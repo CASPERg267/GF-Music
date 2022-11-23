@@ -5,7 +5,12 @@ module.exports = {
     description: "Enable/Disable the Song- / Queue-Loop",
     category: "music",
     cooldown: 5,
-    queue: true,
+    checkers: {
+        vc: true,
+        queue: true,
+        sVc: true,
+        dj: true,
+    },
     options: [
         {
             "StringChoices": {

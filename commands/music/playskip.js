@@ -4,6 +4,12 @@ module.exports = {
     name: "playskip",
     description: "Plays a song from the source.",
     category: "music",
+    checkers: {
+        vc: true,
+        queue: false,
+        sVc: true,
+        dj: true,
+    },
 
     run: async (client, message, args, prefix, queue) => {
 

@@ -3,6 +3,12 @@ module.exports = {
     description: "Gives you information about GF Music ping",
     category: "info",
     cooldown: 5,
+    checkers: {
+        vc: false,
+        queue: false,
+        sVc: false,
+        dj: false,
+    },
     
     run: async (client, message, args) => {
         try {

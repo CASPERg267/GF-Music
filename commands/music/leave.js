@@ -5,7 +5,12 @@ module.exports = {
     aliases: ["lev", "stop", "dc"],
     description: "Makes the bot leave the voice channel.",
     category: "music",
-    queue: true,
+    checkers: {
+        vc: true,
+        queue: true,
+        sVc: true,
+        dj: true,
+    },
 
     run: async (client, message, args, prefix, queue) => {
         const clientVoice = message.guild.members.me.voice.channel;

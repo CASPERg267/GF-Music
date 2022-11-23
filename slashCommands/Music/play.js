@@ -5,6 +5,12 @@ module.exports = {
     description: "Plays a Song/Playlist in your VoiceChannel",
     cooldown: 5,
     category: "music",
+    checkers: {
+        vc: true,
+        queue: false,
+        sVc: true,
+        dj: false,
+    },
     options: [
         {
             "String": {

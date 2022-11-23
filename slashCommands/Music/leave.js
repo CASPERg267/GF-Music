@@ -5,6 +5,12 @@ module.exports = {
     description: "Stops playing and leaves the Channel!",
     category: "music",
     cooldown: 5,
+    checkers: {
+        vc: true,
+        queue: true,
+        sVc: true,
+        dj: true,
+    },
 
     run: async (client, interaction, queue) => {
 

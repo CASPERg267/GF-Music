@@ -6,7 +6,12 @@ module.exports = {
 	aliases: ["q", "que"],
 	description: "Diplay the queue",
 	category: "music",
-	queue: true,
+	checkers: {
+        vc: true,
+        queue: true,
+        sVc: true,
+        dj: false,
+    },
 
 	run: async (client, message, args, prefix, queue) => {
 

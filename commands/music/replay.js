@@ -4,7 +4,12 @@ module.exports = {
     name: "replay",
     description: "Replays the current song.",
     category: "music",
-    queue: true,
+    checkers: {
+        vc: true,
+        queue: true,
+        sVc: true,
+        dj: true,
+    },
 
     run: async (client, message, args, prefix, queue) => {
 

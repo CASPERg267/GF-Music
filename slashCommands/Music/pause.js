@@ -5,7 +5,12 @@ module.exports = {
     aliases: ["pa"],
     description: "Pauses the current song.",
     category: "music",
-    queue: true,
+    checkers: {
+        vc: true,
+        queue: true,
+        sVc: true,
+        dj: false,
+    },
 
     run: async (client, interaction, queue) => {
 

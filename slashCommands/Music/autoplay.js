@@ -5,7 +5,12 @@ module.exports = {
     description: "Toggles Autoplay",
     cooldown: 5,
     category: "music",
-    queue: true,
+    checkers: {
+        vc: true,
+        queue: true,
+        sVc: true,
+        dj: true,
+    },
 
     run: async (client, interaction, queue) => {
         await queue.toggleAutoplay();

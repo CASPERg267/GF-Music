@@ -5,7 +5,12 @@ module.exports = {
     aliases: ["np", "now"],
     description: "Displays the current song playing.",
     category: "music",
-    queue: true,
+    checkers: {
+        vc: true,
+        queue: true,
+        sVc: true,
+        dj: false,
+    },
 
     run: async (client, interaction, queue) => {
 

@@ -5,7 +5,12 @@ module.exports = {
     description: "Adjusts the Volume of the Music",
     cooldown: 10,
     category: "music",
-    queue: true,
+    checkers: {
+        vc: true,
+        queue: true,
+        sVc: true,
+        dj: true,
+    },
     options: [
         {
             "Integer": {

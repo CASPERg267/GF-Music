@@ -3,6 +3,12 @@ module.exports = {
     description: "Gives you information about GF Music ping",
     cooldown: 5,
     category: "info",
+    checkers: {
+        vc: false,
+        queue: false,
+        sVc: false,
+        dj: false,
+    },
     options: [{
             "StringChoices": {
                 name: "what_ping",

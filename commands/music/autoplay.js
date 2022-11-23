@@ -5,7 +5,12 @@ module.exports = {
     aliases: ["ap"],
     description: "Toggles autoplay for the current guild.",
     category: "music",
-    queue: true,
+    checkers: {
+        vc: true,
+        queue: true,
+        sVc: true,
+        dj: true,
+    },
 
     run: async (client, message, args, prefix, queue) => {
         if (!queue.autoplay) {

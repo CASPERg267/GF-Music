@@ -8,6 +8,12 @@ module.exports = {
     cooldown: 10,
     category: "info",
     description: "Shows Bot Information",
+    checkers: {
+        vc: false,
+        queue: false,
+        sVc: false,
+        dj: false,
+    },
     run: async (client, message) => {
         try {
             cpuStat.usagePercent(function (e, percent, seconds) {

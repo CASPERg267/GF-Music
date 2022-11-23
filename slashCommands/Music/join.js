@@ -5,6 +5,13 @@ module.exports = {
 	aliases: ["summon"],
 	description: "Makes the bot join the voice channel.",
 	category: "music",
+	checkers: {
+        vc: true,
+        queue: false,
+        sVc: false,
+        dj: false,
+    },
+	
 	run: async (client, interaction, queue) => {
 		
 		const clientVoice = interaction.guild.members.me.voice.channel;

@@ -1,5 +1,5 @@
 const { EmbedBuilder, PermissionsBitField, ChannelType } = require("discord.js");
-const { onCoolDown, escapeRegex, databasing } = require(`../../structures/functions`);
+const { onCoolDown, escapeRegex, databasing, check_if_dj } = require(`../../structures/functions`);
 const Statcord = require("statcord.js");
 
 module.exports = async (client, message) => {
@@ -24,6 +24,9 @@ module.exports = async (client, message) => {
   const command = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
   if (!command) return;
 
+  let memberChannel = message.member.voice;
+  let botChannel = message.guild.members.me.voice;
+
   //permission
   if (!message.guild.members.me.permissions.has(client.requiredTextPermissions)) return message.author.dmChannel.send({
     embeds: [new EmbedBuilder()
@@ -31,50 +34,6 @@ module.exports = async (client, message) => {
       .setColor(client.config.embed.color)
       .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
   }).catch(() => { });
-
-  if (command.category === "owner" && !config.ownerId.includes(message.author.id)) return;
-
-  if (command.category === `music` && !message.member.voice) {
-    return message.reply({
-      embeds: [
-        new EmbedBuilder()
-          .setColor(client.config.embed.color)
-          .setTitle(`Please join a voice channel first!`)
-          .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
-      ],
-      ephemeral: true
-    })
-  }
-
-  //vc
-  if (command.category === `music` && !message.member.voice || message.member.voice.channel.id !== message.guild.members.me.voice.channel.id) return message.reply({
-    embeds: [new EmbedBuilder()
-      .setDescription("You need to be in a same/voice channel.")
-      .setColor(client.config.embed.color)
-      .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
-  })
-
-  //Check if user is on cooldown with the cmd, with Tomato#6966's Function
-  if (onCoolDown(message, command)) {
-    return message.reply({
-      embeds: [new EmbedBuilder()
-        .setColor(client.config.embed.color)
-        .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
-        .setDescription(`You have to wait for ${onCoolDown(message, command)} in order to use command:**${command}** again.`)
-        .addFields([{ name: `Why is there is a cooldown?`, value: `We apologize for that, but in order to make bot work for everyone else we you should wait, so other users could use the bot without any issues, Thanks for understanding.` }])
-      ]
-    });
-  }
-
-  //if queue not exsit
-  if (command.queue && !queue) {
-    message.reply({
-      embeds: [new EmbedBuilder()
-        .setDescription("There is nothing in the queue right now!")
-        .setColor(client.config.embed.color)
-        .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
-    })
-  }
 
   if (command) {
     let botchannels = client.settings.get(message.guild.id, `botchannel`);
@@ -90,6 +49,67 @@ module.exports = async (client, message) => {
           ]
         })
       }
+    }
+
+    if (command.category === "owner" && !config.ownerId.includes(message.author.id)) return;
+
+    //Check if user is on cooldown with the cmd, with Tomato#6966's Function
+    if (onCoolDown(message, command)) {
+      return message.reply({
+        embeds: [new EmbedBuilder()
+          .setColor(client.config.embed.color)
+          .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
+          .setDescription(`You have to wait for ${onCoolDown(message, command)} in order to use command:**${command}** again.`)
+          .addFields([{ name: `Why is there is a cooldown?`, value: `We apologize for that, but in order to make bot work for everyone else we you should wait, so other users could use the bot without any issues, Thanks for understanding.` }])
+        ]
+      });
+    }
+
+    if (command.checkers.vc && !memberChannel) {
+      return message.reply({
+        embeds: [
+          new EmbedBuilder()
+            .setColor(client.config.embed.color)
+            .setTitle(`Please join a voice channel first!`)
+            .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
+        ],
+      })
+    }
+
+    if (command.checkers.queue && !queue) {
+      return message.reply({
+        embeds: [new EmbedBuilder()
+          .setDescription("There is nothing in the queue right now!")
+          .setColor(client.config.embed.color)
+          .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
+      })
+    }
+
+    if (command.checkers.sVc && queue.voiceChannel && memberChannel.id !== queue.voiceChannel.id) {
+      return message.reply({
+        embeds: [new EmbedBuilder()
+          .setDescription("You need to be in a same/voice channel.")
+          .setColor(client.config.embed.color)
+          .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
+      })
+    }
+
+    if (command.checkers.sVc && memberChannel.id !== botChannel.id) {
+      return message.reply({
+        embeds: [new EmbedBuilder()
+          .setDescription("You need to be in a same/voice channel.")
+          .setColor(client.config.embed.color)
+          .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
+      })
+    }
+
+    if (command.checkers.dj && queue && check_if_dj(client, message.member, queue.songs[0])) {
+      return message.reply({
+        embeds: [new EmbedBuilder()
+          .setDescription(`You need to have dj role in order to use this command, (${check_if_dj(client, message.member, queue.songs[0])})`)
+          .setColor(client.config.embed.color)
+          .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
+      })
     }
 
     try {

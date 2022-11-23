@@ -5,7 +5,12 @@ module.exports = {
     aliases: ["prev"],
     description: "Plays the previous song in the queue.",
     category: "music",
-    queue: true,
+    checkers: {
+        vc: true,
+        queue: true,
+        sVc: true,
+        dj: true,
+    },
 
     run: async (client, message, args, prefix, queue) => {
 

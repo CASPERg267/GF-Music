@@ -5,7 +5,12 @@ module.exports = {
     aliases: [`ly`, `lyric`],
     description: "Display lyrics of a song",
     category: "music",
-    queue: true,
+    checkers: {
+        vc: true,
+        queue: true,
+        sVc: true,
+        dj: false,
+    },
 
     run: async (client, message, args, prefix, queue) => {
 

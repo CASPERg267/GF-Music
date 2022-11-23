@@ -5,7 +5,12 @@ module.exports = {
     description: "get a list of the current Queue",
     cooldown: 10,
     category: "music",
-    queue: true,
+    checkers: {
+        vc: true,
+        queue: true,
+        sVc: true,
+        dj: false,
+    },
 
     run: async (client, interaction, queue) => {
 

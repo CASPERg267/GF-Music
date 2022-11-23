@@ -7,6 +7,12 @@ module.exports = {
     aliases: ["h", "halp", "commands"],
     category: "info",
     description: "Displays all commands that the bot has.",
+    checkers: {
+        vc: false,
+        queue: false,
+        sVc: false,
+        dj: false,
+    },
 
     run: async (client, message, args) => {
         let prefix = client.settings.get(message.guild.id, `prefix`);

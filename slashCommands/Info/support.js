@@ -3,6 +3,12 @@ module.exports = {
     cooldown: 5,
     description: "Sends a Link of the Support Server",
     category: "info",
+    checkers: {
+        vc: false,
+        queue: false,
+        sVc: false,
+        dj: false,
+    },
     run: async (client, interaction) => {
         try {
             interaction.reply({

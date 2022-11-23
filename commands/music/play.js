@@ -5,6 +5,12 @@ module.exports = {
     aliases: ["pplay", "p"],
     description: "Plays a song from the source.",
     category: "music",
+    checkers: {
+        vc: true,
+        queue: false,
+        sVc: true,
+        dj: false,
+    },
 
     run: async (client, message, args, prefix, queue) => {
 

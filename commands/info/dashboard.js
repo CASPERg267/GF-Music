@@ -5,6 +5,12 @@ module.exports = {
     cooldown: 5,
     category: "info",
     description: "Sends a Link of the Dashboard",
+    checkers: {
+        vc: false,
+        queue: false,
+        sVc: false,
+        dj: false,
+    },
     run: async (client, message) => {
         try {
             message.reply({
