@@ -138,14 +138,14 @@ function Queue(nowQueue, nowTrack) {
   const embeded = new EmbedBuilder()
     .setAuthor({ name: `Starting Playing...`, iconURL: 'https://cdn.discordapp.com/emojis/741605543046807626.gif' })
     .setThumbnail(nowTrack.thumbnail)
-    .setColor(client.config.embed.color)
+    .setColor(nowQueue.client.config.embed.color)
     .addFields([{ name: `Track Uploader:`, value: `**[${nowTrack.uploader.name}](${nowTrack.uploader.url})**`, inline: true },
     { name: `Current Player Volume:`, value: `${nowQueue.volume}%`, inline: true },
     { name: `Player Filters:`, value: `>>> ${nowQueue.filters && nowQueue.filters.length > 0 ? `${nowQueue.filters.map(f=>`\`${f}\``).join(`, `)}` : `Normal`}`, inline: true },
     { name: `Autoplay Mode:`, value: `${nowQueue.autoplay ? "On" : "Off"}`, inline: true },
     { name: `Total Playlist Duration:`, value: `${nowQueue.formattedDuration}`, inline: true },
     { name: `Current Track Duration:`, value: `${createBar(nowQueue.songs[0].duration, nowQueue.currentTime, 13)} \`${nowQueue.songs[0].formattedDuration}\`` }])
-    .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
+    .setFooter({ text: nowQueue.client.config.embed.footer_text, iconURL: nowQueue.client.config.embed.footer_icon })
     .setDescription(`**[${nowTrack.name}](${nowTrack.url})**`)
     .setTimestamp()
 

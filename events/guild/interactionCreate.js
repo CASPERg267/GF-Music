@@ -59,34 +59,37 @@ module.exports = async (client, interaction) => {
             })
         }
 
-        if (command.checkers.sVc && queue.voiceChannel && memberChannel.id !== queue.voiceChannel.id) {
-            return interaction.reply({
-                ephemeral: true,
-                embeds: [new EmbedBuilder()
-                    .setDescription("You need to be in a same/voice channel.")
-                    .setColor(client.config.embed.color)
-                    .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
-            })
-        }
+        if (queue) {
 
-        if (command.checkers.sVc && memberChannel.id !== botChannel.id) {
-            return interaction.reply({
-                ephemeral: true,
-                embeds: [new EmbedBuilder()
-                    .setDescription("You need to be in a same/voice channel.")
-                    .setColor(client.config.embed.color)
-                    .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
-            })
-        }
+            if (command.checkers.sVc && queue.voiceChannel && memberChannel.channelId !== queue.voiceChannel.channelId) {
+                return interaction.reply({
+                    ephemeral: true,
+                    embeds: [new EmbedBuilder()
+                        .setDescription("You need to be in a same/voice channel.")
+                        .setColor(client.config.embed.color)
+                        .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
+                })
+            }
 
-        if (command.checkers.dj && queue && check_if_dj(client, interaction.member, queue.songs[0])) {
-            return interaction.reply({
-                ephemeral: true,
-                embeds: [new EmbedBuilder()
-                    .setDescription(`You need to have dj role in order to use this command, (${check_if_dj(client, interaction.member, queue.songs[0])})`)
-                    .setColor(client.config.embed.color)
-                    .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
-            })
+            if (command.checkers.sVc && memberChannel.channelId !== botChannel.channelId) {
+                return interaction.reply({
+                    ephemeral: true,
+                    embeds: [new EmbedBuilder()
+                        .setDescription("You need to be in a same/voice channel.")
+                        .setColor(client.config.embed.color)
+                        .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
+                })
+            }
+
+            if (command.checkers.dj && queue && check_if_dj(client, interaction.member, queue.songs[0])) {
+                return interaction.reply({
+                    ephemeral: true,
+                    embeds: [new EmbedBuilder()
+                        .setDescription(`You need to have dj role in order to use this command, (${check_if_dj(client, interaction.member, queue.songs[0])})`)
+                        .setColor(client.config.embed.color)
+                        .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
+                })
+            }
         }
 
         if (!interaction.guild.members.me.permissions.has(client.requiredVoicePermissions)) {
