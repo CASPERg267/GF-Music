@@ -7,7 +7,7 @@ module.exports = {
         category: "info",
         description: "Displays all commands that the bot has.",
     run: async (client, interaction) => {
-        client.logger.info(`[COMMAND] Help used by ${interaction.author.tag} from ${interaction.guild.name}`, { label: `Help Command` });
+        client.logger.info(`[COMMAND] Help used by ${interaction.member.displayName} from ${interaction.guild.name}`, { label: `Help Command` });
         const embed = new EmbedBuilder()
             .setColor(client.config.embed.color)
             .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })

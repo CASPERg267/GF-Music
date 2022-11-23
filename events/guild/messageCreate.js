@@ -34,6 +34,18 @@ module.exports = async (client, message) => {
 
   if (command.category === "owner" && !config.ownerId.includes(message.author.id)) return;
 
+  if (command.category === `music` && !message.member.voice) {
+    return message.reply({
+      embeds: [
+        new EmbedBuilder()
+          .setColor(client.config.embed.color)
+          .setTitle(`Please join a voice channel first!`)
+          .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
+      ],
+      ephemeral: true
+    })
+  }
+
   //vc
   if (command.category === `music` && !message.member.voice || message.member.voice.channel.id !== message.guild.members.me.voice.channel.id) return message.reply({
     embeds: [new EmbedBuilder()
