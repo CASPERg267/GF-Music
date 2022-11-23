@@ -4,6 +4,7 @@ module.exports = {
     name: "dashboard",
     cooldown: 5,
     description: "Sends a Link of the Dashboard",
+    category: "info",
     run: async (client, interaction) => {
         try {
             interaction.reply({

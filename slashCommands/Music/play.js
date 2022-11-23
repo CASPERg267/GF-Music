@@ -4,6 +4,7 @@ module.exports = {
     name: "play",
     description: "Plays a Song/Playlist in your VoiceChannel",
     cooldown: 5,
+    category: "music",
     options: [
         {
             "String": {

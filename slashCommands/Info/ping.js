@@ -2,6 +2,7 @@ module.exports = {
     name: "ping",
     description: "Gives you information about GF Music ping",
     cooldown: 5,
+    category: "info",
     options: [{
             "StringChoices": {
                 name: "what_ping",

@@ -1,6 +1,5 @@
 const { readdirSync, lstatSync } = require("fs");
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const config = require("../configs/config");
 
 const dirSetup = [{
 	"Folder": "Info", "CmdName": "info",
@@ -131,7 +130,7 @@ module.exports = client => {
 
 		//Once the Bot is ready, add all Slash Commands to each guild
 		client.on("ready", () => {
-			if (config.loadSlashsGlobal) {
+			if (client.config.loadSlashsGlobal) {
 				client.application.commands.set(allCommands)
 					.then(slashCommandsData => {
 						client.slashCommandsData = slashCommandsData;
@@ -155,7 +154,7 @@ module.exports = client => {
 		//DISABLE WHEN USING GLOBAL!
 		client.on("guildCreate", async (guild) => {
 			try {
-				if (!config.loadSlashsGlobal) {
+				if (!client.config.loadSlashsGlobal) {
 					await guild.commands.set([]).catch((e) => { });
 					guild.commands.set(allCommands)
 						.then(slashCommandsData => {

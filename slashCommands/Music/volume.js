@@ -4,6 +4,7 @@ module.exports = {
     name: "volume",
     description: "Adjusts the Volume of the Music",
     cooldown: 10,
+    category: "music",
     queue: true,
     options: [
         {

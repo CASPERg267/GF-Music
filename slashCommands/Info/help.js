@@ -4,7 +4,7 @@ const { readdirSync } = require("fs");
 module.exports = {
         name: "help",
         aliases: ["h", "halp", "commands"],
-        category: "utilities",
+        category: "info",
         description: "Displays all commands that the bot has.",
     run: async (client, interaction) => {
         client.logger.info(`[COMMAND] Help used by ${interaction.author.tag} from ${interaction.guild.name}`, { label: `Help Command` });
@@ -16,7 +16,7 @@ module.exports = {
         const categories = readdirSync("./commands/")
 
         categories.forEach(category => {
-            const dir = client.commands.filter(c => c.config.category === category)
+            const dir = client.commands.filter(c => c.category === category)
             const capitalise = category.slice(0, 1).toUpperCase() + category.slice(1)
             try {
                 embed.addFields([{ name: `❯ ${capitalise} [${dir.size}]:`, value: dir.map(c => `\`${c.config.name}\``).join(" ")}])

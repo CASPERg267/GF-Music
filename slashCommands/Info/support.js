@@ -2,6 +2,7 @@ module.exports = {
     name: "support",
     cooldown: 5,
     description: "Sends a Link of the Support Server",
+    category: "info",
     run: async (client, interaction) => {
         try {
             interaction.reply({

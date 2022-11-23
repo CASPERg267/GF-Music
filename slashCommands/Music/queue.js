@@ -4,6 +4,7 @@ module.exports = {
     name: "queue",
     description: "get a list of the current Queue",
     cooldown: 10,
+    category: "music",
     queue: true,
 
     run: async (client, interaction, queue) => {

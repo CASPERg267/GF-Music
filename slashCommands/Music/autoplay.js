@@ -4,6 +4,7 @@ module.exports = {
     name: "autoplay",
     description: "Toggles Autoplay",
     cooldown: 5,
+    category: "music",
     queue: true,
 
     run: async (client, interaction, queue) => {

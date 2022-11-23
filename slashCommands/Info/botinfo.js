@@ -7,6 +7,7 @@ module.exports = {
     name: "botinfo",
     cooldown: 10,
     description: "Shows Bot Information",
+    category: "info",
     run: async (client, interaction) => {
         try {
             cpuStat.usagePercent(function (e, percent, seconds) {

@@ -3,6 +3,7 @@ const { EmbedBuilder } = require("discord.js");
 module.exports = {
     name: "leave",
     description: "Stops playing and leaves the Channel!",
+    category: "music",
     cooldown: 5,
 
     run: async (client, interaction, queue) => {

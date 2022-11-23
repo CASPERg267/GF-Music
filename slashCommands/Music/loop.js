@@ -3,6 +3,7 @@ const { EmbedBuilder } = require("discord.js");
 module.exports = {
     name: "loop",
     description: "Enable/Disable the Song- / Queue-Loop",
+    category: "music",
     cooldown: 5,
     queue: true,
     options: [

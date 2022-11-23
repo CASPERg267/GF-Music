@@ -1,7 +1,5 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
-const config = require("../../configs/config");
 const { createBar } = require("../../structures/functions");
-let mi;
 
 module.exports = async (client, queue, song) => {
   client.stats.inc(`global`, `songs`)
@@ -16,8 +14,8 @@ module.exports = async (client, queue, song) => {
         message.reply({
           embeds: [new EmbedBuilder()
             .setDescription(`You need to be in my voice channel <#${message.guild.members.me.voice.channelId}>.`)
-            .setColor(config.embed.color)
-            .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })], ephemeral: true
+            .setColor(client.config.embed.color)
+            .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })], ephemeral: true
         });
       }
     };
@@ -32,16 +30,16 @@ module.exports = async (client, queue, song) => {
         if (queue.paused) {
           await queue.resume();
           const embed = new EmbedBuilder()
-            .setColor(config.embed.color)
-            .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
+            .setColor(client.config.embed.color)
+            .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
             .setDescription(`**Song has been resumed**`);
 
           message.reply({ embeds: [embed], ephemeral: true });
         } else {
           await queue.pause();
           const embed = new EmbedBuilder()
-            .setColor(config.embed.color)
-            .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
+            .setColor(client.config.embed.color)
+            .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
             .setDescription(`**Song has been paused**`);
 
           message.reply({ embeds: [embed], ephemeral: true });
@@ -50,10 +48,10 @@ module.exports = async (client, queue, song) => {
         if (!queue) {
           collector.stop();
         }
-        if (queue.songs.length === 1) {
+        if (queue.songs.length === 1 && queue.autoplay) {
           const embed = new EmbedBuilder()
-            .setColor(config.embed.color)
-            .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
+            .setColor(client.config.embed.color)
+            .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
             .setDescription("**There are no songs in queue**")
 
           message.reply({ embeds: [embed], ephemeral: true });
@@ -61,8 +59,8 @@ module.exports = async (client, queue, song) => {
           await queue.skip()
             .then(song => {
               const embed = new EmbedBuilder()
-                .setColor(config.embed.color)
-                .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
+                .setColor(client.config.embed.color)
+                .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                 .setDescription("**Song has been skipped**")
 
               nowplay.edit({ components: [] });
@@ -78,8 +76,8 @@ module.exports = async (client, queue, song) => {
 
         const embed = new EmbedBuilder()
           .setDescription(`**Song has been stopped`)
-          .setColor(config.embed.color)
-          .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
+          .setColor(client.config.embed.color)
+          .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
 
         await nowplay.edit({ components: [] });
         message.reply({ embeds: [embed], ephemeral: true });
@@ -90,16 +88,16 @@ module.exports = async (client, queue, song) => {
         if (queue.repeatMode === 0) {
           queue.setRepeatMode(1);
           const embed = new EmbedBuilder()
-            .setColor(config.embed.color)
-            .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
+            .setColor(client.config.embed.color)
+            .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
             .setDescription(`**Song is loop current**`)
 
           message.reply({ embeds: [embed], ephemeral: true });
         } else {
           queue.setRepeatMode(0);
           const embed = new EmbedBuilder()
-            .setColor(config.embed.color)
-            .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
+            .setColor(client.config.embed.color)
+            .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
             .setDescription(`**Song is unloop current**`)
 
           message.reply({ embeds: [embed], ephemeral: true });
@@ -110,16 +108,16 @@ module.exports = async (client, queue, song) => {
         }
         if (queue.previousSongs.length == 0) {
           const embed = new EmbedBuilder()
-            .setColor(config.embed.color)
-            .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
+            .setColor(client.config.embed.color)
+            .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
             .setDescription("**There are no previous songs**")
 
           message.reply({ embeds: [embed], ephemeral: true });
         } else {
           await queue.previous()
           const embed = new EmbedBuilder()
-            .setColor(config.embed.color)
-            .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
+            .setColor(client.config.embed.color)
+            .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
             .setDescription("**Song has been previoused**`")
 
           nowplay.edit({ components: [] });
@@ -140,14 +138,14 @@ function Queue(nowQueue, nowTrack) {
   const embeded = new EmbedBuilder()
     .setAuthor({ name: `Starting Playing...`, iconURL: 'https://cdn.discordapp.com/emojis/741605543046807626.gif' })
     .setThumbnail(nowTrack.thumbnail)
-    .setColor(config.embed.color)
+    .setColor(client.config.embed.color)
     .addFields([{ name: `Track Uploader:`, value: `**[${nowTrack.uploader.name}](${nowTrack.uploader.url})**`, inline: true },
     { name: `Current Player Volume:`, value: `${nowQueue.volume}%`, inline: true },
     { name: `Player Filters:`, value: `>>> ${nowQueue.filters && nowQueue.filters.length > 0 ? `${nowQueue.filters.map(f=>`\`${f}\``).join(`, `)}` : `Normal`}`, inline: true },
     { name: `Autoplay Mode:`, value: `${nowQueue.autoplay ? "On" : "Off"}`, inline: true },
     { name: `Total Playlist Duration:`, value: `${nowQueue.formattedDuration}`, inline: true },
     { name: `Current Track Duration:`, value: `${createBar(nowQueue.songs[0].duration, nowQueue.currentTime, 13)} \`${nowQueue.songs[0].formattedDuration}\`` }])
-    .setFooter({ text: config.embed.footer_text, iconURL: config.embed.footer_icon })
+    .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
     .setDescription(`**[${nowTrack.name}](${nowTrack.url})**`)
     .setTimestamp()
 
