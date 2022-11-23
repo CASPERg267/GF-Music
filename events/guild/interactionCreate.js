@@ -33,7 +33,7 @@ module.exports = async (client, interaction) => {
             }
         }
 
-        if (!interaction.member.voice) {
+        if (command.category === `music` && !interaction.member.voice) {
             return interaction.reply({
                 embeds: [
                     new EmbedBuilder()
@@ -45,7 +45,7 @@ module.exports = async (client, interaction) => {
             })
         }
 
-        if (interaction.guild.members.me.voice.channel && interaction.guild.members.me.voice.channel.id != interaction.member.voice.id) {
+        if (command.category === `music` && interaction.guild.members.me.voice.channel.id !== interaction.member.voice.channel.id) {
             return interaction.reply({
                 embeds: [new EmbedBuilder()
                     .setColor(client.config.embed.color)
@@ -66,7 +66,7 @@ module.exports = async (client, interaction) => {
             });
         }
 
-        if (!interaction.guild.members.me.permissionsIn(interaction.member.voice).has(client.requiredVoicePermissions)) {
+        if (!interaction.guild.members.me.permissionsIn(interaction.member.voice.channel).has(client.requiredVoicePermissions)) {
             return interaction.reply({
                 embeds: [new EmbedBuilder()
                     .setDescription(`I don't have perm **[\`CONNECT\` or \`SPEAK\`]** in ${interaction.member.voice.name} to join voice!`)

@@ -1,6 +1,7 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const config = require("../../configs/config");
 const { createBar } = require("../../structures/functions");
+let mi;
 
 module.exports = async (client, queue, song) => {
   client.stats.inc(`global`, `songs`)

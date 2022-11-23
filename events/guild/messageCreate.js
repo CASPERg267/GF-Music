@@ -25,13 +25,7 @@ module.exports = async (client, message) => {
     const command = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
     if (!command) return;
 
-    if (!message.member.voice || message.member.voice.channel !== message.guild.members.me.voice.channel) return message.reply({
-      embeds: [new EmbedBuilder()
-        .setDescription("You need to be in a same/voice channel.")
-        .setColor(client.config.embed.color)
-        .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
-    })
-
+    //permission
     if (!message.guild.members.me.permissions.has(client.requiredTextPermissions)) return message.author.dmChannel.send({
       embeds: [new EmbedBuilder()
         .setDescription(`I don't have all of the permissions needed **[\`ViewChannel\` \`SEND_MESSAGES\` \`READ_MESSAGE_HISTORY\` \`ADD_REACTIONS\` \`EMBED_LINKS\`]** in <#${message.channelId}> to execute a command!`)
@@ -40,6 +34,14 @@ module.exports = async (client, message) => {
     }).catch(() => { });
 
     if (command.category === "owner" && !config.ownerId.includes(message.author.id)) return;
+
+    //vc
+    if (command.category === `music` && !message.member.voice || message.member.voice.channel.id !== message.guild.members.me.voice.channel.id) return message.reply({
+      embeds: [new EmbedBuilder()
+        .setDescription("You need to be in a same/voice channel.")
+        .setColor(client.config.embed.color)
+        .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
+    })
 
     //Check if user is on cooldown with the cmd, with Tomato#6966's Function
     if (onCoolDown(message, command)) {
@@ -53,6 +55,7 @@ module.exports = async (client, message) => {
       });
     }
 
+    //if queue not exsit
     if (command.queue && !queue) {
       message.reply({
         embeds: [new EmbedBuilder()

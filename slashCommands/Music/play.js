@@ -26,8 +26,8 @@ module.exports = {
             interaction
         }
         if (!queue) options.textChannel = interaction.guild.channels.cache.get(interaction.channelId)
-        await client.distube.play(channel, Text, options).catch(err => {
-            interaction.reply({
+        await client.distube.play(interaction.member.voice.channel, Text, options).catch(err => {
+            interaction.editReply({
                 embeds: [new EmbedBuilder()
                     .setDescription(err.message)
                     .setColor(client.config.embed.color)
