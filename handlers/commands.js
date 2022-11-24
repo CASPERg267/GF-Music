@@ -10,7 +10,7 @@ module.exports = async client => {
       if (pull.aliases) pull.aliases.forEach(a => client.aliases.set(a, pull.name));
     };
   };
-  ["music", "info"].forEach(x => load(x));
+  ["music", "info", "owner"].forEach(x => load(x));
   await delay(4000);
   client.logger.info(`Commands Loaded`, { label: `Commands` });
 };

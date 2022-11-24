@@ -61,16 +61,6 @@ module.exports = async (client, interaction) => {
 
         if (queue) {
 
-            if (command.checkers.sVc && queue.voiceChannel && memberChannel.channelId !== queue.voiceChannel.channelId) {
-                return interaction.reply({
-                    ephemeral: true,
-                    embeds: [new EmbedBuilder()
-                        .setDescription("You need to be in a same/voice channel.")
-                        .setColor(client.config.embed.color)
-                        .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
-                })
-            }
-
             if (command.checkers.sVc && memberChannel.channelId !== botChannel.channelId) {
                 return interaction.reply({
                     ephemeral: true,
