@@ -49,7 +49,7 @@ module.exports = {
         }
 
         message.reply({ embeds: [lyricsEmbed] })
-            .then(n => {
+            .then(msg => {
                 var total = queue.songs[0].duration * 1000;
                 var current = queue.currentTime * 1000;
                 let time = total - current;
