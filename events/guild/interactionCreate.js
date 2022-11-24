@@ -80,21 +80,21 @@ module.exports = async (client, interaction) => {
                         .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
                 })
             }
+
+            if (!interaction.guild.members.me.permissionsIn(memberChannel.channel).has(client.requiredVoicePermissions)) {
+                return interaction.reply({
+                    embeds: [new EmbedBuilder()
+                        .setDescription(`I don't have perm **[\`CONNECT\` or \`SPEAK\`]** to join voice!`)
+                        .setColor(client.config.embed.color)
+                        .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
+                });
+            }
         }
 
         if (!interaction.guild.members.me.permissions.has(client.requiredVoicePermissions)) {
             return interaction.reply({
                 embeds: [new EmbedBuilder()
                     .setDescription("I don't have perm `CONNECT` or `SPEAK` to execute command!")
-                    .setColor(client.config.embed.color)
-                    .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
-            });
-        }
-
-        if (!interaction.guild.members.me.permissionsIn(memberChannel.channel).has(client.requiredVoicePermissions)) {
-            return interaction.reply({
-                embeds: [new EmbedBuilder()
-                    .setDescription(`I don't have perm **[\`CONNECT\` or \`SPEAK\`]** in <#${memberChannel.id}> to join voice!`)
                     .setColor(client.config.embed.color)
                     .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
             });

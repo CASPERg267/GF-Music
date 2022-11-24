@@ -26,7 +26,6 @@ module.exports = {
                     .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
             });
         } catch (err) {
-            console.log(err);
             interaction.reply({
                 ephemeral: true,
                 embeds: [new EmbedBuilder()

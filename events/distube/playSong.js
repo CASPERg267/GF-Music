@@ -48,7 +48,7 @@ module.exports = async (client, queue, song) => {
         if (!queue) {
           collector.stop();
         }
-        if (queue.songs.length === 1 && queue.autoplay) {
+        if (queue.songs.length === 1 && !queue.autoplay) {
           const embed = new EmbedBuilder()
             .setColor(client.config.embed.color)
             .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })

@@ -14,10 +14,7 @@ module.exports = {
 
     run: async (client, message, args, prefix, queue) => {
 
-        let song = args.join(" ");
-        let CurrentSong = queue.songs[0];
-        if (!song && CurrentSong) song = CurrentSong.name;
-
+        let song = queue.songs[0].name;
         let lyrics = null;
 
         try {
@@ -29,7 +26,6 @@ module.exports = {
                     .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })]
             });
         } catch (err) {
-            console.log(err);
             message.reply({
                 embeds: [new EmbedBuilder()
                     .setDescription(`Couldn't find any lyrics for that song!`)
@@ -40,7 +36,7 @@ module.exports = {
         let lyricsEmbed = new EmbedBuilder()
             .setColor(client.config.embed.color)
             .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
-            .setTitle(`Lyrics`)
+            .setTitle(`Lyrics for ${song}`)
             .setDescription(`**${song}**\n${lyrics}`)
             .setTimestamp();
 
