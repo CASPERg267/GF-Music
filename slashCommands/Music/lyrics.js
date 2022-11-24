@@ -17,7 +17,7 @@ module.exports = {
         let song = queue.songs[0].name;
         let lyrics = null;
         try {
-            lyrics = await client.lyrics.songs.search(song);
+            lyrics = await client.lyrics.songs.search(song)?.searches[0]?.lyrics();
             if (!lyrics) interaction.reply({
                 ephemeral: true,
                 embeds: [new EmbedBuilder()

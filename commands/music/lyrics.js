@@ -21,7 +21,7 @@ module.exports = {
         let lyrics = null;
 
         try {
-            lyrics = await client.lyrics.songs.search(song);
+            lyrics = await client.lyrics.songs.search(song)?.searches[0]?.lyrics();
             if (!lyrics) message.reply({
                 embeds: [new EmbedBuilder()
                     .setDescription(`Couldn't find any lyrics for that song!`)
