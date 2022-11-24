@@ -25,7 +25,7 @@ module.exports = {
             const dir = client.commands.filter(c => c.category === category)
             const capitalise = category.slice(0, 1).toUpperCase() + category.slice(1)
             try {
-                embed.addFields([{ name: `❯ ${capitalise} [${dir.size}]:`, value: dir.map(c => `\`${c.config.name}\``).join(" ") }])
+                embed.addFields([{ name: `❯ ${capitalise} [${dir.size}]:`, value: dir.map(c => `\`${c.name}\``).join(" ") }])
             } catch (e) {
                 console.log(e)
             }

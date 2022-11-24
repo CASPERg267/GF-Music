@@ -51,7 +51,7 @@ module.exports = async (client, message) => {
       }
     }
 
-    if (command.category === "owner" && !config.ownerId.includes(message.author.id)) return;
+    if (command.category === "owner" && !client.config.ownerId.includes(message.author.id)) return;
 
     //Check if user is on cooldown with the cmd, with Tomato#6966's Function
     if (onCoolDown(message, command)) {

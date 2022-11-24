@@ -5,10 +5,16 @@ module.exports = {
     aliases: ["leaves", "lserver", "ls"],
     category: "owner",
     description: "Only for developers",
+    checkers: {
+        vc: false,
+        queue: false,
+        sVc: false,
+        dj: false,
+    },
 
     run: async (client, message, args) => {
         if (!args[0]) {
-            return message.channel.send({
+            return message.reply({
                 embeds: [new EmbedBuilder()
                     .setColor(client.config.embed.color)
                     .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
@@ -20,7 +26,7 @@ module.exports = {
             content: `make sure you got right guild id`
         })
         guild.leave().then(g => {
-            message.channel.send({
+            message.reply({
                 content: `Left ${g.name}`
             })
         })

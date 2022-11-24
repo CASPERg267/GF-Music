@@ -5,16 +5,22 @@ module.exports = {
     aliases: ["eval"],
     category: "owner",
     description: "Only for developers",
+    checkers: {
+        vc: false,
+        queue: false,
+        sVc: false,
+        dj: false,
+    },
 
     run: async (client, message, args) => {
 
         const input = args.join(' ');
-        if (!input) return message.channel.send({
-            embeds: new EmbedBuilder()
+        if (!input) return message.reply({
+            embeds: [new EmbedBuilder()
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                 .setDescription(`What do I evaluate?`)
-        })
+        ]})
         if (!input.toLowerCase().includes('token')) {
 
             let embed = ``;
@@ -29,12 +35,12 @@ module.exports = {
                 embed = `\`\`\`js\n${err.length > 2048 ? 'Too large to display.' : err}\`\`\``
             }
 
-            message.channel.send({
-                content: new EmbedBuilder()
+            message.reply({
+                embeds: [new EmbedBuilder()
                     .setColor(client.config.embed.color)
                     .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                     .setDescription(embed)
-            });
+            ]});
         }
     }
 }

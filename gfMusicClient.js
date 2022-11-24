@@ -12,6 +12,7 @@ class gfMusicClient extends Client {
             intents: [
                 GatewayIntentBits.Guilds,
                 GatewayIntentBits.GuildMessages,
+                GatewayIntentBits.MessageContent,
                 GatewayIntentBits.GuildVoiceStates,
                 GatewayIntentBits.GuildMessageReactions
             ],
