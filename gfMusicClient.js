@@ -85,7 +85,7 @@ class gfMusicClient extends Client {
         });
 
         ["aliases", "commands"].forEach(x => this[x] = new Collection());
-        ["commands", "events", "distube", "autoresume", "database", "slashCommands"].forEach(x => require(`./handlers/${x}`)(this));
+        ["commands", "events", "distube", "autoresume", "database", "slashCommands", this.config.antiCrash_Module ? "antiCrash" : null,].forEach(x => require(`./handlers/${x}`)(this));
 
     }
     start() {

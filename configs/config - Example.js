@@ -11,6 +11,7 @@ module.exports = {
     },
     activityInterval: 35, //activity interval in seconds, time to change bot activity (recommended is 35 sec)
     autoResumeInterval: 5, // time in seconds to save songs in database in case of restarting the bot and autoreusming songs after restart
+    antiCrash_Module: true, // to avoid bot restarts if something is wrong
     ownerId: ["123456789012345678", "01234567891234567"], // list of owner ids that should have access to secret stuff in the bot
     support_server: "", // a link of your support server
     support_server_id: "", // id of your support server
