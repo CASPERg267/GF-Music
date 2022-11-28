@@ -136,7 +136,7 @@ Just make sure you have node version higher than 16.9.0
 2. Get your bot ( token - client ID - client Secret ) from [Discord developer portal](https://discord.com/developers/applications/) **Remember to not share your token or client secret with anyone**
 <div align="left">
   <a href="https://discord.com/developers/applications/">
-    <img src="https://share.gfstatus.xyz/Gu2Ssc" alt="Logo" width="310" height="600">
+    <img src="https://share.gfstatus.xyz/Gu2Ssc" alt="Logo" width="310" height="560">
   </a>
   </div>
 
