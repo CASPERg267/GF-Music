@@ -13,7 +13,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/CASPERg267/GF-Music">
-    <img src="https://cdn.discordapp.com/attachments/842633060050665502/1000579231589339136/gfmusic.png" alt="Logo" width="130" height="130">
+    <img src="https://cdn.discordapp.com/avatars/1000770158975000606/d164aab010ab3662a4cb731696d6d8cc.png" alt="Logo" width="130" height="130">
   </a>
 
 <h3 align="center">GF Music [Discord Bot]</h3>
@@ -66,28 +66,28 @@
 
 <div align="center">
   <a href="https://github.com/CASPERg267/GF-Music">
-    <img src="https://cdn.discordapp.com/attachments/842633060050665502/1000773777380089946/unknown.png" alt="Logo" width="900" height="450">
+    <img src="https://share.gfstatus.xyz/L5bvW2" alt="Logo" width="900" height="450">
   </a>
   </div>
   <br>
   <br>
   <div align="center">
   <a href="https://github.com/CASPERg267/GF-Music">
-    <img src="https://cdn.discordapp.com/attachments/842633060050665502/1000774757802840084/unknown.png" alt="Logo" width="900" height="450">
+    <img src="https://share.gfstatus.xyz/fm0OO2" alt="Logo" width="900" height="450">
   </a>
   </div>
   <br>
   <br>
   <div align="center">
   <a href="https://github.com/CASPERg267/GF-Music">
-    <img src="https://cdn.discordapp.com/attachments/842633060050665502/1000774985792622743/unknown.png" alt="Logo" width="900" height="450">
+    <img src="https://share.gfstatus.xyz/pNicKG" alt="Logo" width="900" height="450">
   </a>
   </div>
   <br>
   <br>
   <div align="center">
   <a href="https://github.com/CASPERg267/GF-Music">
-    <img src="https://cdn.discordapp.com/attachments/842633060050665502/1000775723830747206/unknown.png" alt="Logo" width="900" height="450">
+    <img src="https://share.gfstatus.xyz/JUhQDv" alt="Logo" width="900" height="450">
   </a>
   </div>
   <br>
@@ -136,7 +136,7 @@ Just make sure you have node version higher than 16.9.0
 2. Get your bot ( token - client ID - client Secret ) from [Discord developer portal](https://discord.com/developers/applications/) **Remember to not share your token or client secret with anyone**
 <div align="left">
   <a href="https://discord.com/developers/applications/">
-    <img src="https://cdn.discordapp.com/attachments/842633060050665502/1000819612448981063/unknown.png" alt="Logo" width="750" height="300">
+    <img src="https://share.gfstatus.xyz/Gu2Ssc" alt="Logo" width="750" height="300">
   </a>
   </div>
 

@@ -10,7 +10,7 @@ module.exports = (client, queue) => {
     queue.autoplay = Boolean(data.defaultautoplay);
     queue.volume = Number(data.defaultvolume);
 
-    var autoresumeinterval = setInterval(async () => {
+    /*var autoresumeinterval = setInterval(async () => {
         if (queue && queue.id && client.settings.get(queue.id, `autoresume`)) {
             const makeTrackData = track => {
                 return {
@@ -65,5 +65,5 @@ module.exports = (client, queue) => {
             }
         }
     }, Number(client.config.autoResumeInterval) * 1000);
-    client.playerintervals.set(`autoresumeinterval-${queue.id}`, autoresumeinterval);
+    client.playerintervals.set(`autoresumeinterval-${queue.id}`, autoresumeinterval);*/
 }

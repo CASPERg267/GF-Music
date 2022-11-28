@@ -59,7 +59,7 @@ module.exports = async (client, message) => {
         embeds: [new EmbedBuilder()
           .setColor(client.config.embed.color)
           .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
-          .setDescription(`You have to wait for ${onCoolDown(message, command)} in order to use command:**${command}** again.`)
+          .setDescription(`You have to wait for ${onCoolDown(message, command)} in order to use command:**${command.name}** again.`)
           .addFields([{ name: `Why is there is a cooldown?`, value: `We apologize for that, but in order to make bot work for everyone else we you should wait, so other users could use the bot without any issues, Thanks for understanding.` }])
         ]
       });
