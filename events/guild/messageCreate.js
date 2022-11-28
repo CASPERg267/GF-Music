@@ -110,9 +110,9 @@ module.exports = async (client, message) => {
       client.stats.inc(message.guild.id, "commands");
       client.stats.inc("global", "commands");
       if (client.config.statcord_token && client.shard) {
-        Statcord.ShardingClient.postCommand(command, message.author.id, client);
+        Statcord.ShardingClient.postCommand(command.name, message.author.id, client);
       } else if (client.config.statcord_token) {
-        Statcord.postCommand(command, message.author.id);
+        Statcord.postCommand(command.name, message.author.id);
       }
       command.run(client, message, args, prefix, queue);
     } catch (e) {
