@@ -24,8 +24,8 @@ module.exports = async (client, message) => {
   const command = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
   if (!command) return;
 
-  let memberChannel = message.member.voice;
-  let botChannel = message.guild.members.me.voice;
+  let memberChannel = message.member.voice.channel;
+  let botChannel = message.guild.members.me.voice.channel;
 
   //permission
   if (!message.guild.members.me.permissions.has(client.requiredTextPermissions)) return message.author.dmChannel.send({
@@ -87,7 +87,7 @@ module.exports = async (client, message) => {
 
     if (queue) {
 
-      if (command.checkers.sVc && memberChannel.channelId !== botChannel.channelId) {
+      if (command.checkers.sVc && memberChannel.id !== botChannel.id) {
         return message.reply({
           embeds: [new EmbedBuilder()
             .setDescription("You need to be in a same/voice channel.")

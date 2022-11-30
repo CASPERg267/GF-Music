@@ -322,12 +322,8 @@ module.exports.load = async client => {
                             let currentSong = client.distube.getQueue(guild.id);
                             if (!currentSong) return `${member.displayName} Nothing playing to get lyrics`;
                             else if (currentSong) {
-                                let searches = await client.lyrics.songs.search(currentSong.songs[0].name);
-                                if (!searches) return `${member.displayName} No lyrics found for ${currentSong.songs[0].name}`;
-                                let firstSong = searches[0];
-                                if (!firstSong) return `${member.displayName} No lyrics found for ${currentSong.songs[0].name}`;
-                                let lyrics = await firstSong.lyrics();
-                                return lyrics;
+                                let lyrics = await client.lyrics.songs.search(currentSong.songs[0].name)?.searches[0]?.lyrics();
+                                return lyrics || `${member.displayName} No lyrics found for ${currentSong.songs[0].name}`;
                             }
                         },
                         setNew: async ({ guild, user, newData }) => {

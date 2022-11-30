@@ -17,8 +17,8 @@ module.exports = async (client, interaction) => {
         }
     }
 
-    let memberChannel = interaction.member.voice;
-    let botChannel = interaction.guild.members.me.voice;
+    let memberChannel = interaction.member.voice.channel;
+    let botChannel = interaction.guild.members.me.voice.channel;
 
     if (command) {
         let botchannels = client.settings.get(interaction.guildId, `botchannel`);
@@ -61,7 +61,7 @@ module.exports = async (client, interaction) => {
 
         if (queue) {
 
-            if (command.checkers.sVc && memberChannel.channelId !== botChannel.channelId) {
+            if (command.checkers.sVc && memberChannel.id !== botChannel.id) {
                 return interaction.reply({
                     ephemeral: true,
                     embeds: [new EmbedBuilder()
@@ -81,7 +81,7 @@ module.exports = async (client, interaction) => {
                 })
             }
 
-            if (!interaction.guild.members.me.permissionsIn(memberChannel.channel).has(client.requiredVoicePermissions)) {
+            if (!interaction.guild.members.me.permissionsIn(memberChannel).has(client.requiredVoicePermissions)) {
                 return interaction.reply({
                     embeds: [new EmbedBuilder()
                         .setDescription(`I don't have perm **[\`CONNECT\` or \`SPEAK\`]** to join voice!`)
