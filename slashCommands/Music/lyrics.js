@@ -16,21 +16,32 @@ module.exports = {
 
         let song = queue.songs[0].name;
         let lyrics = null;
+        //replying to the fuckin interaction in case it takes longer than 3 seconds to find the lyrics
+        await interaction.reply({
+            embeds: [new EmbedBuilder()
+                .setDescription(`Searching the lyrics for ${song}`)
+                .setColor(client.config.embed.color)
+                .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
+            ]
+        });
         try {
-            lyrics = await client.lyrics.songs.search(song)?.searches[0]?.lyrics();
+            let searches = await client.lyrics.songs.search(song)
+            let firstSong = searches[0];
+            let lyrics = await firstSong.lyrics();
+
             let lyricsEmbed = new EmbedBuilder()
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
-                .setTitle(`Lyrics`)
-                .setDescription(`**${song}**\n${lyrics || `Couldn't find any lyrics`}`);
+                .setTitle(`Lyrics for ${song}`)
+                .setDescription(`${lyrics || `Couldn't find any lyrics`}`);
 
             if (lyrics.length > 2048) {
                 lyricsEmbed.setDescription(lyrics.substring(0, 2045));
             }
 
-            interaction.reply({ embeds: [lyricsEmbed], ephemeral: true });
+            interaction.editReply({ embeds: [lyricsEmbed], ephemeral: true });
         } catch (err) {
-            interaction.reply({
+            interaction.editReply({
                 ephemeral: true,
                 embeds: [new EmbedBuilder()
                     .setDescription(`Couldn't find any lyrics for that song!`)

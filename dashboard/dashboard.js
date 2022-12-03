@@ -320,9 +320,12 @@ module.exports.load = async client => {
                             let server = client.guilds.cache.get(guild.id);
                             let member = server.members.cache.get(user.id);
                             let currentSong = client.distube.getQueue(guild.id);
+                            let lyrics;
                             if (!currentSong) return `${member.displayName} Nothing playing to get lyrics`;
                             else if (currentSong) {
-                                let lyrics = await client.lyrics.songs.search(currentSong.songs[0].name)?.searches[0]?.lyrics();
+                                let searches = await client.lyrics.songs.search(currentSong.songs[0].name)
+                                let firstSong = searches[0];
+                                let lyrics = await firstSong.lyrics();
                                 return lyrics || `${member.displayName} No lyrics found for ${currentSong.songs[0].name}`;
                             }
                         },

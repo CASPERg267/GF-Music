@@ -18,12 +18,15 @@ module.exports = {
         let lyrics = null;
 
         try {
-            lyrics = await client.lyrics.songs.search(song)?.searches[0]?.lyrics();
+            let searches = await client.lyrics.songs.search(song)
+            let firstSong = searches[0];
+            let lyrics = await firstSong.lyrics();
+
             let lyricsEmbed = new EmbedBuilder()
                 .setColor(client.config.embed.color)
                 .setFooter({ text: client.config.embed.footer_text, iconURL: client.config.embed.footer_icon })
                 .setTitle(`Lyrics for ${song}`)
-                .setDescription(`**${song}**\n${lyrics || `Couldn't find any lyrics`}`)
+                .setDescription(`${lyrics || `Couldn't find any lyrics`}`)
                 .setTimestamp();
 
             if (lyrics.length > 2048) {
