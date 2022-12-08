@@ -66,28 +66,28 @@
 
 <div align="center">
   <a href="https://github.com/CASPERg267/GF-Music">
-    <img src="https://share.gfstatus.xyz/L5bvW2" alt="Logo" width="900" height="450">
+    <img src="https://share.gfstatus.xyz/L5bvW2" alt="Logo">
   </a>
   </div>
   <br>
   <br>
   <div align="center">
   <a href="https://github.com/CASPERg267/GF-Music">
-    <img src="https://share.gfstatus.xyz/fm0OO2" alt="Logo" width="900" height="450">
+    <img src="https://share.gfstatus.xyz/fm0OO2" alt="Logo">
   </a>
   </div>
   <br>
   <br>
   <div align="center">
   <a href="https://github.com/CASPERg267/GF-Music">
-    <img src="https://share.gfstatus.xyz/pNicKG" alt="Logo" width="900" height="450">
+    <img src="https://share.gfstatus.xyz/pNicKG" alt="Logo">
   </a>
   </div>
   <br>
   <br>
   <div align="center">
   <a href="https://github.com/CASPERg267/GF-Music">
-    <img src="https://share.gfstatus.xyz/JUhQDv" alt="Logo" width="900" height="450">
+    <img src="https://share.gfstatus.xyz/JUhQDv" alt="Logo">
   </a>
   </div>
   <br>
@@ -136,7 +136,7 @@ Just make sure you have node version higher than 16.9.0
 2. Get your bot ( token - client ID - client Secret ) from [Discord developer portal](https://discord.com/developers/applications/) **Remember to not share your token or client secret with anyone**
 <div align="left">
   <a href="https://discord.com/developers/applications/">
-    <img src="https://share.gfstatus.xyz/Gu2Ssc" alt="Logo" width="310" height="560">
+    <img src="https://share.gfstatus.xyz/Gu2Ssc" alt="Logo">
   </a>
   </div>
 
