@@ -38,7 +38,7 @@ module.exports.load = async client => {
     })
 
     const feeds = {}
-    setInterval(() => updateFeeds(client, feeds, global), 5000);
+    setInterval(() => updateFeeds(client, feeds, global), Number(client.config.dashboard.updateFeeds) * 1000);
 
     await DBD.useLicense(client.config.dashboard.license);
     DBD.Dashboard = DBD.UpdatedClass();
