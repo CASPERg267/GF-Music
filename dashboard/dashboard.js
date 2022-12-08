@@ -11,6 +11,7 @@ const playerFilters = require(`../assests/playerFilters.json`);
 const playlistMixes = require(`../assests/playlistMixes.json`);
 
 module.exports.load = async client => {
+    
     // commands listing
 
     const commands = []
@@ -35,6 +36,9 @@ module.exports.load = async client => {
             list: list
         })
     })
+
+    const feeds = {}
+    setInterval(() => updateFeeds(client, feeds, global), 5000);
 
     await DBD.useLicense(client.config.dashboard.license);
     DBD.Dashboard = DBD.UpdatedClass();
@@ -145,9 +149,7 @@ module.exports.load = async client => {
                     description: `${client.user.username} Total Commands: ${client.commands.size}`,
                     footer: `You can check them from ${client.config.dashboard.domain}/commands`,
                 },
-                feeds: setInterval(() => {
-                    updateFeeds(client)
-                }, Number(client.config.dashboard.updateFeeds) * 1000),
+                feeds: feeds,
             },
             commands: commands,
             guilds: {
@@ -323,10 +325,14 @@ module.exports.load = async client => {
                             let lyrics;
                             if (!currentSong) return `${member.displayName} Nothing playing to get lyrics`;
                             else if (currentSong) {
-                                let searches = await client.lyrics.songs.search(currentSong.songs[0].name)
-                                let firstSong = searches[0];
-                                let lyrics = await firstSong.lyrics();
-                                return lyrics || `${member.displayName} No lyrics found for ${currentSong.songs[0].name}`;
+                                try {
+                                    let searches = await client.lyrics.songs.search(currentSong.songs[0].name)
+                                    let firstSong = searches[0];
+                                    let lyrics = await firstSong.lyrics();
+                                    return lyrics;
+                                } catch (e) {
+                                    return `${member.displayName} No lyrics found for ${currentSong.songs[0].name}`;
+                                }
                             }
                         },
                         setNew: async ({ guild, user, newData }) => {

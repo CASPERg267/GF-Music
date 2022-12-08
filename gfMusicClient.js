@@ -3,6 +3,7 @@ const { DisTube } = require('distube');
 const { YtDlpPlugin } = require("@distube/yt-dlp");
 const { SpotifyPlugin } = require('@distube/spotify');
 const { SoundCloudPlugin } = require('@distube/soundcloud');
+const { DeezerPlugin } = require("@distube/deezer");
 const Genius = require("genius-lyrics");
 const filters = require("./assests/filters.json");
 
@@ -80,7 +81,8 @@ class gfMusicClient extends Client {
                 new SoundCloudPlugin(),
                 new YtDlpPlugin({
                     update: false
-                })
+                }),
+                new DeezerPlugin()
             ]
         });
 
