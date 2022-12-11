@@ -202,6 +202,8 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 [Support Server](https://discord.gg/DFtRG4eAan)
 
+<a href="https://www.buymeacoffee.com/GFbots"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=GFbots&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
