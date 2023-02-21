@@ -31,7 +31,7 @@ module.exports = {
         "license": "" || process.env.license, // licence from https://assistantscenter.com/licenses/opensource
         "port": 80, // open port for the dashboard
         "domain": "", // http://your.domain
-        "redirectUri": "", // redirect uri should be http://your.domain/discord/callback
+        "redirectUri": "/discord/callback", // redirect uri should be /discord/callback
         "clientId": "" || process.env.clientId, // you bot client id https://discord.com/developers/applications
         "clientSecret": "" || process.env.clientSecret, // https://discord.com/developers/applications
         "updateFeeds": 20, //update feeds every 20 second, the faster update intervals the more resource being used
