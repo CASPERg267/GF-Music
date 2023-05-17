@@ -66,28 +66,28 @@
 
 <div align="center">
   <a href="https://github.com/CASPERg267/GF-Music">
-    <img src="https://share.gfstatus.xyz/L5bvW2" alt="Logo">
+    <img src="https://i.variable-hosting.com/lGpv" alt="Features">
   </a>
   </div>
   <br>
   <br>
   <div align="center">
   <a href="https://github.com/CASPERg267/GF-Music">
-    <img src="https://share.gfstatus.xyz/fm0OO2" alt="Logo">
+    <img src="https://i.variable-hosting.com/YcmV" alt="Features">
   </a>
   </div>
   <br>
   <br>
   <div align="center">
   <a href="https://github.com/CASPERg267/GF-Music">
-    <img src="https://share.gfstatus.xyz/pNicKG" alt="Logo">
+    <img src="https://share.gfstatus.xyz/pNicKG" alt="Features">
   </a>
   </div>
   <br>
   <br>
   <div align="center">
   <a href="https://github.com/CASPERg267/GF-Music">
-    <img src="https://share.gfstatus.xyz/JUhQDv" alt="Logo">
+    <img src="https://i.variable-hosting.com/bQt2" alt="Features">
   </a>
   </div>
   <br>
