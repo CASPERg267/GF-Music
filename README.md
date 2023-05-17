@@ -80,7 +80,7 @@
   <br>
   <div align="center">
   <a href="https://github.com/CASPERg267/GF-Music">
-    <img src="https://share.gfstatus.xyz/pNicKG" alt="Features">
+    <img src="https://i.variable-hosting.com/iB9z" alt="Features">
   </a>
   </div>
   <br>
