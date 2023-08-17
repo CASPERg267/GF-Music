@@ -12,7 +12,7 @@ module.exports = {
         dj: true,
     },
 
-    run: async (client, message, args) => {
+    run: async (client, message, args, prefix, queue) => {
 
         const volume = parseInt(args[0]);
         if (!volume) {
