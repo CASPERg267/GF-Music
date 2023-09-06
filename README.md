@@ -211,10 +211,10 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* Thanks you [Assistants Center](https://github.com/Assistants-Center) for the amazing discord dashboard [npm package](https://www.npmjs.com/package/discord-dashboard) and helping me debugging.
+* Thank you [Assistants Center](https://github.com/Assistants-Center) for the amazing discord dashboard [npm package](https://www.npmjs.com/package/discord-dashboard) and helping me debugging.
 * Thank you [Adivise](https://github.com/Adivise) for inspiration and ideas
 * Thank you [Tomato6966](https://github.com/Tomato6966) for [slash commands handler](https://github.com/Tomato6966/Discord-js-handler-slash-Commands)
-* Thank you [Discord.js Community](https://discord.gg/djs) for banning me for bigotry
+* Thank you [Discord.js Disgusting Gay Community](https://discord.gg/djs) for banning me for bigotry
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
